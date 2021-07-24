@@ -1,104 +1,101 @@
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-commerce Project</title>
-
-    <!-- owl carousel css file cdn link  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-
-    <!-- font awesome cdn link  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-
-    <!-- custom css file link  -->
-    <link rel="stylesheet" href="/css/styleHome.css">
-
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <script src="https://kit.fontawesome.com/cb0aac7562.js" crossorigin="anonymous"></script>
+    <title>Menu</title>
 </head>
 <body>
 
-<!-- header section starts  -->
+<!-- Navbar Section -->
 
-<!-- header section starts  -->
+    <div class="nav-container">
 
-<header>
+   <div class="menu">
+       <nav>
+           <input type="checkbox" id="show-search">
+           <input type="checkbox" id="show-menu">
+           <label for="show-menu" class="menu-icon"><i class="fas fa-bars    "></i></label>
+       <div class="menu-items">
+       <div class="logo">
+           <a href="home.html">E-com</a>
+       </div>
+       <ul class="menu-links">
+           <li><a href="home.html">Home</a></li>
+           <li>
+            <a href="#" class="desktop-links">Shop</a>
+            <input type="checkbox" id="show-features">
+            <label for="show-features">Shop</label>
+            <ul>                    @foreach($shops as $shop)
+                <li>  <a href="{{ route('shops.show',$shop->id) }}">{{ $shop->name }}</a></li>
+@endforeach
 
-<div class="header-1">
-
-    <a href="#" class="logo"> <i class="fas fa-shopping-bag"></i>  Multi-Shop </a>
-
-    <div class="form-container">
-    
-        <form action="{{route('products.search')}}" method="GET">
-                            <input name="query" placeholder="search products" type="search" id="search">
-                          
-                            <button type="submit" for="search" class="fas fa-search"> </button>
-                        </form>
-    </div>
-
-</div>
-
-<div class="header-2">
-
-    <div id="menu" class="fas fa-bars"></div>
-
-    <nav class="navbar">
-        <ul>
-            <li><a class="active" href="/">home</a></li>
-            @foreach($categories as $category)
-            <li>
-                        <a href="{{route('products.index', ['category_id' => $category->id])}}">{{$category->name}}<i
-                                    class="pe-7s-angle-right"></i></a>
-
-                                    @php
+               
+            </ul>
+        </li>
+        <li>
+            <a href="#" class="desktop-links">categoriess</a>
+            <input type="checkbox" id="show-products">
+            <label for="show-products">categoriess</label>
+            <ul>
+                @foreach($categories as $category)
+            
+         
+                <li>
+                    <a href="{{route('products.index', ['category_id' => $category->id])}}" class="desktop-links">{{ $category->name }}</a>
+                    <input type="checkbox" id="show-mens">
+                    <label for="show-mens">{{ $category->name }}</label>
+                    
+                    @php
                                         $children = TCG\Voyager\Models\Category::where('parent_id', $category->id)->get();
                                     @endphp
 
                                @if($children->isNotEmpty())
-                                <div class="category-menu-dropdown">
-
-                                    @foreach ($children as $child)
-                                        <div class="category-dropdown-style category-common3">
-                                            <h4 class="categories-subtitle">
-                                                <a href="{{route('products.index', ['category_id' => $child->id])}}">
-                                                {{$child->name}}
-                                                </a>
-
-                                              </h4>
-                                            @php
-                                                $grandChild = TCG\Voyager\Models\Category::where('parent_id', $child->id)->get();
-                                            @endphp
-                                            @if($grandChild->isNotEmpty())
-                                                <ul>
-                                                    @foreach ($grandChild as $c)
-                                                        <li><a href="{{route('products.index', ['category_id' => $c->id])}}">{{$c->name}}</a></li>
-                                                    @endforeach
-                                                </ul>
-                                            @endif
-                                        </div>
-                                    @endforeach
-
-
-                                </div>
-
-                              @endif
-                        </li>
-            @endforeach
-        </ul>
-    </nav>
-
-    <div class="icons">
-        <a href="#" class="fas fa-heart"></a>
-        <a href="{{ route('cart.index') }}" class="fas fa-shopping-cart"></a>
-        <a href="#" class="fas fa-user"></a>
+                    <ul>
+                        @foreach($children as $child)
+                        <li><a href="{{route('products.index', ['category_id' => $child->id])}}">{{$child->name}}</a></li>
+                       @endforeach
+                    </ul>
+                    @endif
+                </li>
+                @endforeach
+                
+            </ul>
+        </li>
+           <li><a href="#">About US</a></li>
+           <li><a href="#">Feedback</a></li>
+       </ul>
     </div>
-
+    <a href="{{ route('cart.index') }}" class="menu-search"><i class="fas fa-shopping-cart"></i></a>
+    <label for="show-search" class="menu-search"><i class="fas fa-search    "></i></label>
+    <form action="{{route('products.search')}}" class="search-box">
+        <input type="text" placeholder="Type Something to Search" required>
+        <button type="submit" class="go-icon"><i class="fas fa-long-arrow-alt-right    "></i></button>
+    </form>
+  
+    </nav>
+   </div>
+    
 </div>
 
-</header>
+   <!-- End Navbar -->
 
-<section class="feature" id="featured">
+   <!-- Start New Arrival -->
+
+   <div class="body-container">
+
+   <!-- Product Section -->
+
+
+   <section class="feature" id="featured">
 
 <h1 class="heading"> <span> featured product </span> </h1>
 @foreach ($products as $product)
@@ -133,7 +130,7 @@
             <span>Rating</span>
         </div>
         <p>{{ $product->description }}</p>
-        <strong class="price">{{ $product->selling_price }}<span>rs 2000</span> </strong>
+        <strong class="price">{{ $product->selling_price }} </strong>
         <a class="fas fa-shopping-cart" href="{{route('cart.add', $product->id)}}"><button class="btn">add to cart</button></a>
 
     </div>
@@ -141,86 +138,68 @@
 </div>
 @endforeach
 </section>
+    <!-- End Product Section -->
 
+</div>
 
-<!-- deal section ends -->
+    <!-- End Deal Section -->
 
-<!-- newsletter section starts  -->
+    <!-- Start Footer -->
 
-<section class="newsletter">
-
-    <h1>newsletter</h1>
-    <p>get in touch for latest discounts and updates</p>
-    <form method="post" action="{{ route('newsletter.store',<?php auth()->id() ?>) }}">
-    @csrf
-        <input type="email" placeholder="enter your email">
-        <input type="submit" class="btn">
-    </form>
-
-</section>
-
-<!-- newsletter section ends -->
-
-<!-- footer section starts  -->
-
-<section class="footer">
-
-    <div class="box-container">
-
-        <div class="box">
-            <a href="#" class="logo"> <i class="fas fa-shopping-bag"></i>  shopping </a>
-            <p>For your greater shopping experience.</p>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-row">
+                <div class="footer-col">
+                    <h4>company</h4>
+                    <ul>
+                        <li><a href="#">about us</a></li>
+                        <li><a href="#">our services</a></li>
+                        <li><a href="#">privacy policy</a></li>
+                        <li><a href="#">affiliate program</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>get help</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">shipping</a></li>
+                        <li><a href="#">returns</a></li>
+                        <li><a href="#">order status</a></li>
+                        
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>online shop</h4>
+                    <ul>
+                        <li><a href="#">watch</a></li>
+                        <li><a href="#">bag</a></li>
+                        <li><a href="#">shoes</a></li>
+                        <li><a href="#">dress</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>follow us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
         </div>
+   </footer>
 
-        <div class="box">
-            <h3>links</h3>
-            <a href="#">home</a>
-            <a href="#">arrival</a>
-            <a href="#">featured</a>
-            <a href="#">gallery</a>
-            <a href="#">deal</a>
-        </div>
+   <!-- End Footer -->
 
-        <div class="box">
-            <h3>contact us</h3>
-            <p> <i class="fas fa-home"></i>
-              kaushaltar,bhaktapur
-           
-            </p>
-            <p> <i class="fas fa-phone"></i>
-            9843777683
-            </p>
-            <p> <i class="fas fa-globe"></i>
-               globalcyberlife.com
-            </p>
-        </div>
-
-    </div>
-
-<h1 class="credit">college project </h1>
-
-</section>
-
-<!-- footer section ends -->
-
-
-
-
-
-
-
-
-
-
-
-<!-- jquery cdn link  -->
+    <!-- jquery cdn link  -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <!-- owl carousel js file cdn link  -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
 <!-- custom js file link  -->
-<script src="js/home.js"></script>
-    
+<script src="/js/home.js"></script>
+
 </body>
 </html>

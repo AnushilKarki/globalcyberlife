@@ -1,0 +1,29 @@
+  <li>
+            <a href="#" class="desktop-links">categoriess</a>
+            <input type="checkbox" id="show-products">
+            <label for="show-products">categoriess</label>
+            <ul>
+                @foreach($categories as $category)
+            
+         
+                <li>
+                    <a href="{{route('products.index', ['category_id' => $category->id])}}" class="desktop-links">{{ $category->name }}</a>
+                    <input type="checkbox" id="show-mens">
+                    <label for="show-mens">{{ $category->name }}</label>
+                    
+                    @php
+                                        $children = TCG\Voyager\Models\Category::where('parent_id', $category->id)->get();
+                                    @endphp
+
+                               @if($children->isNotEmpty())
+                    <ul>
+                        @foreach($children as $child)
+                        <li><a href="{{route('products.index', ['category_id' => $child->id])}}">{{$child->name}}</a></li>
+                       @endforeach
+                    </ul>
+                    @endif
+                </li>
+                @endforeach
+                
+            </ul>
+        </li>

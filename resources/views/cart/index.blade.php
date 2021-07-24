@@ -1,203 +1,231 @@
 
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>College Project</title>
-
-    <!-- owl carousel css file cdn link  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-
-    <!-- font awesome cdn link  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-
-    <!-- custom css file link  -->
-    <link rel="stylesheet" href="/css/styleHome.css">
-
+    <link rel="stylesheet" href="/css/navbar.css">
+	<link rel="stylesheet" href="/css/cart.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <script src="https://kit.fontawesome.com/cb0aac7562.js" crossorigin="anonymous"></script>
+    <title>Menu</title>
 </head>
 <body>
 
-<!-- header section starts  -->
+<!-- Navbar Section -->
 
+    <div class="nav-container">
 
-<header>
+   <div class="menu">
+       <nav>
+           <input type="checkbox" id="show-search">
+           <input type="checkbox" id="show-menu">
+           <label for="show-menu" class="menu-icon"><i class="fas fa-bars    "></i></label>
+       <div class="menu-items">
+       <div class="logo">
+           <a href="home.html">E-com</a>
+       </div>
+       <ul class="menu-links">
+           <li><a href="home.html">Home</a></li>
+           <li>
+            <a href="#" class="desktop-links">Shop</a>
+            <input type="checkbox" id="show-features">
+            <label for="show-features">Shop</label>
+            <ul>                    @foreach($shops as $shop)
+                <li>  <a href="{{ route('shops.show',$shop->id) }}">{{ $shop->name }}</a></li>
+@endforeach
 
-<div class="header-1">
+               
+            </ul>
+        </li>
+        <li>
+            <a href="#" class="desktop-links">categoriess</a>
+            <input type="checkbox" id="show-products">
+            <label for="show-products">categoriess</label>
+            <ul>
+                @foreach($categories as $category)
+            
+         
+                <li>
+                    <a href="{{route('products.index', ['category_id' => $category->id])}}" class="desktop-links">{{ $category->name }}</a>
+                    <input type="checkbox" id="show-mens">
+                    <label for="show-mens">{{ $category->name }}</label>
+                    
+                    @php
+                                        $children = TCG\Voyager\Models\Category::where('parent_id', $category->id)->get();
+                                    @endphp
 
-    <a href="#" class="logo"> <i class="fas fa-shopping-bag"></i>  Multi-shop </a>
-
-    <div class="form-container">
-    
-        <form action="{{route('products.search')}}" method="GET">
-                            <input name="query" placeholder="search products" type="search" id="search">
-                          
-                            <button type="submit" for="search" class="fas fa-search"> </button>
-                        </form>
+                               @if($children->isNotEmpty())
+                    <ul>
+                        @foreach($children as $child)
+                        <li><a href="{{route('products.index', ['category_id' => $child->id])}}">{{$child->name}}</a></li>
+                       @endforeach
+                    </ul>
+                    @endif
+                </li>
+                @endforeach
+                
+            </ul>
+        </li>
+           <li><a href="#">About US</a></li>
+           <li><a href="#">Feedback</a></li>
+       </ul>
     </div>
-
-</div>
-
-<div class="header-2">
-
-    <div id="menu" class="fas fa-bars"></div>
-
-    <nav class="navbar">
-        <ul>
-            <li><a class="active" href="/">home</a></li>
-          
-        </ul>
+    <a href="{{ route('cart.index') }}" class="menu-search"><i class="fas fa-shopping-cart"></i></a>
+    <label for="show-search" class="menu-search"><i class="fas fa-search    "></i></label>
+    <form action="{{route('products.search')}}" class="search-box">
+        <input type="text" placeholder="Type Something to Search" required>
+        <button type="submit" class="go-icon"><i class="fas fa-long-arrow-alt-right    "></i></button>
+    </form>
+  
     </nav>
-
-    <div class="icons">
-        <a href="#" class="fas fa-heart"></a>
-        <a href="{{ route('cart.index') }}" class="fas fa-shopping-cart"></a>
-        <a href="{{ route('home') }}" class="fas fa-user"></a>
-    </div>
-
+   </div>
+    
 </div>
 
-</header>
+   <!-- End Navbar -->
 
-<section class="feature">
+   <!-- Start New Arrival -->
 
-<h1 class="heading"> <span> Cart </span> </h1>
+   <div class="container">
 
-<div class="row">
+        <h1>Shopping Cart</h1>
+    
+        <div class="cart">
+    
+            <div class="products">
+    @foreach($cartitems as $item)
+                <div class="product">
+         
+				@php
+                                        $photo = App\Models\Product::where('id', $item->id)->value('image');
+                                    @endphp
+                  
+					<img src="{{asset('storage/'.$photo)}}" >
+    
+                    <div class="product-info">
+    
+                        <h3 class="product-name">{{ $item->name }}</h3>
+    
+                        <h4 class="product-price">{{ $item->price }}</h4>
+    
+                        <h4 class="product-offer">50%</h4>
+    
 
- 
-
-    <div class="content">
-	<table>
-						<thead>
-							<tr class="main-hading">
-							
-								<th class="text-center"><h3>NAME</h3></th>
-						
-								<th class="text-center"><h3>UNIT PRICE</h3></th>
-								<th class="text-center"><h3>QUANTITY</h3></th>
-								<th class="text-center"><h3>TOTAL</h3></th> 
-								<th class="text-center"><i class="ti-trash remove-icon"></i></th>
-							</tr>
-						</thead>
-						<tbody>
-                                    @foreach($cartitems as $item)
-							<tr>
-						
-								<td >
-									<h2>{{ $item->name }}</h2>
-									
-								</td>
-							
-								<td><h2> Rs {{ $item->price }}</h2></td>
-								<td ><!-- Input Order -->
-									<div class="input-group">
-									<form action="{{route('cart.update',$item->id)}}">
+						<form action="{{route('cart.update',$item->id)}}">
+							@csrf
 <input name="quan" type="number" value="{{ $item->quantity }}">
 <input type="submit" value="save">
 </form>
-									</div>
-									<!--/ End Input Order -->
-								</td>
-								<td><h2> Rs {{ \Cart::session(auth()->id())->get($item->id)->getPriceSum() }}</h2></td>
-								<td ><a href="{{ route('cart.destroy',$item->id) }}"><i class="ti-trash remove-icon"></i></a></td>
-							</tr>
-					@endforeach
-						</tbody>
-					</table>
-       
+    
+                        <p class="product-remove">
+    
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+    
+							<a href="{{ route('cart.destroy',$item->id) }}"> <span class="remove">Remove</span></a>
+						
+    
+                        </p>
+    
+                    </div>
+    
+                </div>
+    @endforeach
+                
+    
+            </div>
+    
+            <div class="cart-total">
+    
+                <p>
+    
+                    <span>Total Price</span>
+    
+                    <span> {{ \Cart::session(auth()->id())->getTotal()  }}</span>
+    
+                </p>
+    
+                <p>
+    
+                    <span>Number of Items</span>
+    
+                    <span>{{ \Cart::session(auth()->id())->getContent()->count() }}</span>
+    
+                </p>
+    
+                <p>
+    
+                    <span>You Save</span>
+    
+                    <span>₹ 1,000</span>
+    
+                </p>
+    
+
+				<a href="{{ route('cart.checkout') }}">Checkout</a>
+
+            </div>
+    
+        </div>
+    
     </div>
 
-</div>
-<div class="row">
-				<div>
-					<!-- Total Amount -->
-					<div>
-						<div class="row">
-							<div >
-								<div class="left">
-									<div class="coupon">
-										<form action="{{ route('cart.coupon') }}" target="_blank">
-											<input name="Coupon_code" placeholder="Enter Your Coupon">
-											<button class="btn" type="submit">Apply</button>
-										</form>
-									</div>
-									<div class="checkbox">
-										<label class="checkbox-inline" for="2"><input name="news" id="2" type="checkbox"> Shipping (+10$)</label>
-									</div>
-								</div>
-							</div>
-							<div >
-								<div class="right">
-									<ul>
-										<li><h3>Cart Subtotal Rs {{ \Cart::session(auth()->id())->getTotal()  }}</h3></li>
-										<li><h3>Shipping rs 60-rs 150</h3></li>
-										<li><h3>You Save $20.00</h3></li>
-										<li class="last"><h3>You Pay {{ \Cart::session(auth()->id())->getTotal()  }}</h3>></li>
-									</ul>
-									<br>
-									<div>
-										<a href="{{ route('cart.checkout') }}" class="btn">Checkout</a>
-										<a href="{{ route('home') }}" class="btn">Continue shopping</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!--/ End Total Amount -->
-				</div>
-			</div>
+    <!-- End Deal Section -->
 
-</section>
+    <!-- Start Footer -->
 
-<section class="footer">
-
-    <div class="box-container">
-
-        <div class="box">
-            <a href="#" class="logo"> <i class="fas fa-shopping-bag"></i> cyberlife </a>
-            <p>welcome to global cyberlife where your shopping is made easier and more secure</p>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-row">
+                <div class="footer-col">
+                    <h4>company</h4>
+                    <ul>
+                        <li><a href="#">about us</a></li>
+                        <li><a href="#">our services</a></li>
+                        <li><a href="#">privacy policy</a></li>
+                        <li><a href="#">affiliate program</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>get help</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">shipping</a></li>
+                        <li><a href="#">returns</a></li>
+                        <li><a href="#">order status</a></li>
+                        
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>online shop</h4>
+                    <ul>
+                        <li><a href="#">watch</a></li>
+                        <li><a href="#">bag</a></li>
+                        <li><a href="#">shoes</a></li>
+                        <li><a href="#">dress</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>follow us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
         </div>
+   </footer>
 
-        <div class="box">
-            <h3>links</h3>
-            <a href="#">home</a>
-            <a href="#">arrival</a>
-            <a href="#">featured</a>
-            <a href="#">gallery</a>
-            <a href="#">deal</a>
-        </div>
+   <!-- End Footer -->
 
-        <div class="box">
-            <h3>contact us</h3>
-            <p> <i class="fas fa-home"></i>
-               kaushaltar,bahktapur
-            </p>
-            <p> <i class="fas fa-phone"></i>
-                9849594857
-            </p>
-            <p> <i class="fas fa-globe"></i>
-              www.globalcyberlife.com
-            </p>
-        </div>
-
-    </div>
-
-
-
-</section>
-
-<!-- footer section ends -->
-
-
-
-
-
-
-<!-- footer section ends -->
-
-<!-- jquery cdn link  -->
+    <!-- jquery cdn link  -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <!-- owl carousel js file cdn link  -->
@@ -205,6 +233,6 @@
 
 <!-- custom js file link  -->
 <script src="/js/home.js"></script>
-    
+
 </body>
 </html>

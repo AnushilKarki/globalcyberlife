@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Stock;
+use App\Models\Shop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
@@ -19,6 +20,7 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $shops = Shop::take(3)->get();
         $categoryId = request('category_id');
         $categoryName = null;
 
@@ -32,21 +34,21 @@ class ProductController extends Controller
         }
         $categories = Category::whereNull('parent_id')->get();
         
-        return view('product.index', compact('products', 'categoryName','categories'));
+        return view('product.index', compact('products','shops', 'categoryName','categories'));
     }
 
     public function search(Request $request)
     {
-
+        $shops = Shop::take(3)->get();
         $query = $request->input('query');
         $products = Product::where('name','LIKE',"%$query%")->paginate(10);
         $categories = Category::whereNull('parent_id')->get();
-        return view('product.catalog',compact('products','categories'));
+        return view('product.catalog',compact('products','shops','categories'));
     }
 
     public function searchbyprice(Request $request)
     {
-
+        $shops = Shop::take(3)->get();
         $query = $request->input('query');
 
         $products = Product::where('selling_price','LIKE',"%$query%")->paginate(10);
@@ -55,11 +57,12 @@ class ProductController extends Controller
                 ->where('age', '>', 35)
                 ->get();
 
-        return view('product.catalog',compact('products'));
+        return view('product.catalog',compact('products','shops'));
     }
 
     public function show(Product $product)
     {
+        $shops = Shop::take(3)->get();
         $products = Product::where('id','LIKE',$product->id)->get();
         $stocks = Stock::where('product_id','LIKE',$product->id)->get();
         $categories = Category::whereNull('parent_id')->get();
@@ -94,7 +97,7 @@ class ProductController extends Controller
 // }
 
        
-        return view('product.show', compact('products','stocks','categories'));
+        return view('product.show', compact('products','stocks','categories','shops'));
 
     }
 

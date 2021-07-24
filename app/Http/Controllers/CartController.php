@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\Coupon;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Shop;
+use App\Models\Category;
 class CartController extends Controller
 {
     public function add(Product $product)
@@ -20,8 +22,10 @@ class CartController extends Controller
     }
     public function index()
     {
+        $categories = Category::whereNull('parent_id')->get();
+        $shops = Shop::take(3)->get();
         $cartitems=\Cart::session(auth()->id())->getContent();
-        return view('cart.index',compact('cartitems'));
+        return view('cart.index',compact('cartitems','shops','categories'));
     }
     public function destroy($itemid)
     {
@@ -40,7 +44,7 @@ class CartController extends Controller
    }
    public function checkout()
    {
-       
+    
        return view('cart.checkout');
    }
     public function applyCoupon()
