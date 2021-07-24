@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\Order;
 use PDF;
+use App\Models\Shop;
+use App\Models\Sub_order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class OrderController extends Controller
@@ -108,7 +110,7 @@ class OrderController extends Controller
                 //payment option
              
                 $order->generateSubOrders();
-               
+             
                 if(request('payment_method')=='paypal'){
                     return redirect()->route('paypal.checkout',$order->id);
                 }

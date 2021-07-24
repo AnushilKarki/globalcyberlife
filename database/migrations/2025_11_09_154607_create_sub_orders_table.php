@@ -15,9 +15,17 @@ class CreateSubOrdersTable extends Migration
     {
         Schema::create('sub_orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('shop_id')->references('id')->on('shops')->onDelete('cascade')->nullable();
-            $table->foreignId('order_id')->references('id')->on('orders')->onDelete('cascade')->nullable();
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade')->nullable();
+            $table->unsignedBigInteger('shop_id');
+
+            $table->foreign('shop_id')->references('id')->on('shops')->nullable();
+            $table->unsignedBigInteger('order_id');
+
+            $table->foreign('order_id')->references('id')->on('orders')->nullable();
+            $table->unsignedBigInteger('user_id');
+
+            $table->foreign('user_id')->references('id')->on('users')->nullable();
+          
+          
             $table->enum('status',['processing','completed','declined','returned','exchanged'])->default('processing');
             $table->float('grand_total')->nullable();
             $table->integer('item_count')->nullable();

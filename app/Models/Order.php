@@ -48,7 +48,7 @@ class Order extends Model
  
              $suborder = $this->sub_order()->create([
                  'order_id'=> $this->id,
-                 'shop_id'=> $shop->id ?? 1,
+                 'shop_id'=> $shop->id,
                  'grand_total'=> $products->sum('pivot.price'),
                  'item_count'=> $products->count(),
                  'user_id'=>  auth()->id()
