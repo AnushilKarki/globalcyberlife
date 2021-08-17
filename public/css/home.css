@@ -241,6 +241,7 @@ html{
 
 .gallery{
     min-height: 100vh;
+    padding-top: 30px;
 }
 
 .gallery .controls{

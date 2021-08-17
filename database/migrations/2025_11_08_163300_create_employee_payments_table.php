@@ -16,8 +16,9 @@ class CreateEmployeePaymentsTable extends Migration
         Schema::create('employee_payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('shop_id')->references('id')->on('shops')->onDelete('cascade')->nullable();
-          
+            $table->foreignId('rider_id')->references('id')->on('delivery_riders')->onDelete('cascade')->nullable();
             $table->foreignId('emp_id')->references('id')->on('users')->onDelete('cascade')->nullable();
+            $table->foreignId('task_id')->references('id')->on('delivery_tasks')->onDelete('cascade')->nullable();
             $table->string('particular')->nullable();
             $table->float('total_amount',8,2);
             $table->float('paid',8,2);

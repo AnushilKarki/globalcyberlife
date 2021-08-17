@@ -13,10 +13,122 @@
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/footer.css">
     <!-- custom css file link  -->
     <link rel="stylesheet" href="/css/styleHome.css">
+<style>
+	
+h2{
+    text-align:left;
+    padding-top: 70px;
+}
 
+.error {
+    color: red;
+    border-color: red;
+}
+
+.row {
+    display: -ms-flexbox; /* IE10 */
+    display: flex;
+    -ms-flex-wrap: wrap; /* IE10 */
+    flex-wrap: wrap;
+    margin: 0 -10px;
+}
+
+.col-25 {
+    -ms-flex: 25%; /* IE10 */
+    flex: 25%;
+}
+
+.col-50 {
+    -ms-flex: 50%; /* IE10 */
+    flex: 50%;
+}
+
+.col-75 {
+    -ms-flex: 75%; /* IE10 */
+    flex: 75%;
+}
+
+.col-25,.col-50,.col-75 {
+    padding: 0 16px;
+}
+
+.container {
+    background-color: #FFFFFF;
+    padding: 3px 18px 13px 18px;
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+    box-shadow: 0 0 2rem 0 rgba(168, 180, 194, 0.37);
+}
+
+
+input[type=text] {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 12px;
+    border: 1px solid rgb(130, 26, 26);
+    border-radius: 1px;
+}
+
+label {
+    margin-bottom: 10px;
+    display: block;
+}
+
+.icon-container {
+    margin-bottom: 20px;
+    padding: 7px 0;
+    font-size: 24px;
+}
+
+.btn {
+    background-color: #01BAEF;
+    color: white;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    width: 100%;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 17px;
+    box-shadow: 0 0 1rem 0 rgba(99, 123, 150, 0.329);
+
+}
+
+.btn:hover {
+    background-color: #0CBABA;
+}
+
+a {
+    color: #2196F3;
+}
+
+hr {
+    border: 1px solid lightgrey;
+}
+
+span.price {
+    float: right;
+    color: grey;
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns 
+    stack on top of each other instead of next to each other (also change the direction 
+    - make the "cart" column go on top) 
+*/
+@media (max-width: 800px) {
+    .row {
+        flex-direction: column-reverse;
+    }
+    .col-25 {
+        margin-bottom: 20px;
+    }
+}
+</style>
 </head>
 <body>
 
@@ -26,95 +138,117 @@
 
 <header>
 
-<div class="header-1">
+<div class="nav-container">
 
-    <a href="#" class="logo"> <i class="fas fa-shopping-bag"></i>  Multi-Shop </a>
+<div class="menu">
+	<nav>
+		<input type="checkbox" id="show-search">
+		<input type="checkbox" id="show-menu">
+		<label for="show-menu" class="menu-icon"><i class="fas fa-bars    "></i></label>
+	<div class="menu-items">
+	<div class="logo">
+		<a href="home.html">E-com</a>
+	</div>
+	<ul class="menu-links">
+		<li><a href="/home">Home</a></li>
+		<li>
+		 <a href="#" class="desktop-links">Shop</a>
+		 <input type="checkbox" id="show-features">
+		 <label for="show-features">Shop</label>
+		 <ul>                    @foreach($shops as $shop)
+			 <li>  <a href="{{ route('shops.show',$shop->id) }}">{{ $shop->name }}</a></li>
+@endforeach
 
-    <div class="form-container">
-    
-        <form action="{{route('products.search')}}" method="GET">
-                            <input name="query" placeholder="search products" type="search" id="search">
-                          
-                            <button type="submit" for="search" class="fas fa-search"> </button>
-                        </form>
-    </div>
+			
+		 </ul>
+	 </li>
+	 <li>
+		 <a href="#" class="desktop-links">categoriess</a>
+		 <input type="checkbox" id="show-products">
+		 <label for="show-products">categoriess</label>
+		 <ul>
+			 @foreach($categories as $category)
+		 
+	  
+			 <li>
+				 <a href="{{route('products.index', ['category_id' => $category->id])}}" class="desktop-links">{{ $category->name }}</a>
+				 <input type="checkbox" id="show-mens">
+				 <label for="show-mens">{{ $category->name }}</label>
+				 
+				 @php
+									 $children = TCG\Voyager\Models\Category::where('parent_id', $category->id)->get();
+								 @endphp
 
+							@if($children->isNotEmpty())
+				 <ul>
+					 @foreach($children as $child)
+					 <li><a href="{{route('products.index', ['category_id' => $child->id])}}">{{$child->name}}</a></li>
+					@endforeach
+				 </ul>
+				 @endif
+			 </li>
+			 @endforeach
+			 
+		 </ul>
+	 </li>
+	 <li>
+		 <a href="#" class="desktop-links">Gift</a>
+		 <input type="checkbox" id="show-features">
+		 <label for="show-features">Gift</label>
+		 <ul>                    @foreach($gifts as $gift)
+			 <li>  <a href="{{ route('products.index',$gift->id) }}">{{ $gift->particular }}</a></li>
+@endforeach
+
+			
+		 </ul>
+	 </li>
+		<li><a href="#">About US</a></li>
+		<li><a href="#">Feedback</a></li>
+	</ul>
+ </div>
+ <a href="{{ route('cart.index') }}" class="menu-search"><i class="fas fa-shopping-cart"></i></a>
+ <label for="show-search" class="menu-search"><i class="fas fa-search    "></i></label>
+ <form action="{{route('products.search')}}" class="search-box">
+	 <input type="text" placeholder="Type Something to Search" required>
+	 <button type="submit" class="go-icon"><i class="fas fa-long-arrow-alt-right    "></i></button>
+ </form>
+
+ </nav>
 </div>
-
-<div class="header-2">
-
-    <div id="menu" class="fas fa-bars"></div>
-
-    <nav class="navbar">
-        <ul>
-            <li><a class="active" href="/">home</a></li>
-          
-        </ul>
-    </nav>
-
-    <div class="icons">
-        <a href="#" class="fas fa-heart"></a>
-        <a href="{{ route('cart.index') }}" class="fas fa-shopping-cart"></a>
-        <a href="{{ route('home') }}" class="fas fa-user"></a>
-    </div>
-
+ 
 </div>
-
 </header>
 
-<section class="feature" id="featured">
 
-<h1 class="heading"> <span> confirm order  </span> </h1>
 
+<h2></h2>
 <div class="row">
-
-<form class="form" method="post" action="{{ route('orders.store') }}">
+    <div class="col-75">
+        <div class="container">
+         
+<form class="form" id="validate" method="post" action="{{ route('orders.store') }}">
                             @csrf
-		<section class="shop checkout section">
-			<div class="container">
-				<div class="row"> 
-					<div class="col-lg-8 col-12">
-						<div class="checkout-form">
-							<h2>Make Your Checkout Here</h2>
-							<p>Please register in order to checkout more quickly</p>
-						
-								<div class="row">
-									<div class="col-lg-6 col-md-6 col-12">
-										<div class="form-group">
-											<label>Full Name<span>*</span></label>
-											<input type="text" name="shipping_fullname" placeholder="" required="required">
-										</div>
-									</div>
-								<br>
-									<div class="col-lg-6 col-md-6 col-12">
-										<div class="form-group">
-											<label>Email Address<span>*</span></label>
-											<input type="email" name="email" placeholder="" required="required">
-										</div><br>
-									</div>
-									<div class="col-lg-6 col-md-6 col-12">
-										<div class="form-group">
-											<label>Phone Number<span>*</span></label>
-											<input type="number" name="shipping_phone" placeholder="" required="required">
-										</div>
-									</div><br>
-									<div class="col-lg-6 col-md-6 col-12">
-										<div class="form-group">
-											<label>Country<span>*</span></label>
-											<select name="country_name" id="country">
-												
-										
-												<option value="NP">Nepal</option>
-											
-											
-										
-									
-											</select>
-										</div>
-									</div><br>
-									<div class="col-lg-6 col-md-6 col-12">
-										<div class="form-group">
-											<label>State / Divition<span>*</span></label>
+                <div class="row">
+                    <div class="col-50">
+                        <h3>Billing Address</h3>
+                        <label for="fname"><i class="fa fa-user"></i> Full Name</label>
+                        <input type="text" id="fname" name="shipping_fullname" placeholder="Anushil Karki" required>
+                        <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                        <input type="text" id="email" name="email" placeholder="karki420@gmail.com" required>
+						<label for="city"><i class="fa fa-institution"></i> Phone no </label>
+                        <input type="text" id="city" name="shipping_phone" placeholder="9849594857" required>
+
+						<label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
+                        <input type="text" id="adr" name="shipping_address" placeholder="balkumari " required>
+                        <label for="city"><i class="fa fa-institution"></i> City</label>
+                        <input type="text" id="city" name="shipping_city" placeholder="Lalitpur" required>
+						<label for="country"><i class="fa fa-institution"></i> Country</label>
+                        <input type="text" id="city" name="country_name" placeholder="Lalitpur" required>
+
+                        <div class="row">
+                            <div class="col-50">
+                               
+								<label for="state">State / Divition</label>
 											<select name="shipping_state" id="state-province">
 												<option value="divition" selected="selected">1</option>
 												<option>2</option>
@@ -124,87 +258,51 @@
 												<option>6</option>
 												<option>7</option>
 											</select>
-										</div>
-									</div><br>
-									<div class="col-lg-6 col-md-6 col-12">
-										<div class="form-group">
-											<label>city<span>*</span></label>
-											<input type="text" name="shipping_city" placeholder="" required="required">
-										</div>
-									</div><br>
-									<div class="col-lg-6 col-md-6 col-12">
-										<div class="form-group">
-											<label>Address <span>*</span></label>
-											<input type="text" name="shipping_address" placeholder="" required="required">
-										</div>
-									</div><br>
-									<div class="col-lg-6 col-md-6 col-12">
-										<div class="form-group">
-											<label>zip Code<span>*</span></label>
-											<input type="text" name="shipping_zipcode" placeholder="" required="required">
-										</div>
-									</div><br>
-								
-									<div class="col-12">
-										<div class="form-group create-account">
-											<input id="cbox" type="checkbox">
-											<label>Create an account?</label>
-										</div>
-									</div>
-								</div>
-						<br>
-							<!--/ End Form -->
-						</div>
-					</div>
-					<br>
-					<div class="col-lg-4 col-12">
-						<div class="order-details">
-							<!-- Order Widget -->
-							<div class="single-widget">
-								<h2>CART  TOTALS</h2>
-								<div class="content">
-									<ul>
-										<li>Sub Total<span>{{ \Cart::session(auth()->id())->getTotal() }}</span></li>
-										
-										<li class="last">Total<span>{{\Cart::session(auth()->id())->getTotal()}}</span></li>
-									</ul>
-								</div>
-							</div>
-							<!--/ End Order Widget -->
-							<!-- Order Widget -->
-							<div class="single-widget">
-								<h2>Payments</h2>
-								<div class="content">
-									<div class="checkbox">
-								
-										<label class="checkbox-inline" for="2"><input name="payment_method" id="2" type="checkbox" value="cash_on_delivery"> Cash On Delivery</label>
-										
-									</div>
-								</div>
-							</div>
-							<!--/ End Order Widget -->
-							<!-- Payment Method Widget -->
-						
-							<!--/ End Payment Method Widget -->
-							<!-- Button Widget -->
-							<div class="single-widget get-button">
-								<div class="content">
-									<div class="button">
-                                    <button type="submit">place order</button>
-									</div>
-								</div>
-							</div>
-							<!--/ End Button Widget -->
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-        </form>
-			</div>
+                            </div>
+                            <div class="col-50">
+                                <label for="zip">Zip</label>
+                                <input type="text" id="zip" name="shipping_zipcode" placeholder="44600"required>
+                            </div>
+                        </div>
+                    </div>
 
-</section>
+                    <div class="col-50">
+                        <h3>Payment :</h3>
+                        <br>
+                        <br>
+                        
+                        <input name="payment_method" type="checkbox" value="cash_on_delivery"> Cash On Delivery</label></h3>
+                        
+                      <label>select order type</label>
+<select name="ordertype" id="sizes">
 
+  <option value="gift">Gift</option>
+  <option value="shopping">shopping</option>
+ 
+</select>
+
+                        
+                    </div>
+					<div class="col-50">
+                        <h3>Cart Total : </h3>
+                        <br>
+                        <br>
+
+										
+										<h3>Rs : {{\Cart::session(auth()->id())->getTotal()}}</h3>
+                        
+                      
+                        
+                    </div>
+                </div>
+              
+            
+                <input type="submit" value="Continue to checkout" class="btn">
+            </form>
+        </div>
+    </div>
+    
+</div>
 <section class="footer">
 
     <div class="box-container">
@@ -250,7 +348,53 @@
 
 
 <!-- footer section ends -->
-
+<script>
+	$('#validate').validate({
+    roles: {
+        shipping_fullname: {
+            required: true,
+        },
+        email: {
+            required: true,
+        },
+        shipping_address: {
+            required: true,
+        },
+        shipping_city: {
+            required: true,
+        },
+        shipping_state: {
+            required: true,
+        },
+        shipping_zipcode: {
+            required: true,
+        },
+		shipping_phone: {
+            required: true,
+        },
+        country_name: {
+            required: true,
+        },
+		payment_method: {
+            required: true,
+        },
+      
+       
+    },
+    messages: {
+        shipping_fullname:"Please input full name*",
+        email:"Please input email*",
+        shipping_city:"Please input city*",
+        shipping_address:"Please input address*",
+        shipping_state:"Please input state*",
+        shipping_zipcode:"Please input address*",
+		shipping_phone:"please input shipping phone number*",
+		payment_method:"please input payment method*",
+		country_name:"please input country name*"
+       
+    },
+});
+</script>
 <!-- jquery cdn link  -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 

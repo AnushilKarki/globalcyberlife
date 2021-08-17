@@ -15,16 +15,16 @@ class CreateRoutesTable extends Migration
     {
         Schema::create('routes', function (Blueprint $table) {
             $table->id();
-            $table->string('starting_location');
-            $table->string('ending_location');
+            $table->string('starting_location')->nullable();
+            $table->string('ending_location')->nullable();
             $table->string('route_name');
             $table->float('km')->nullable();
             $table->float('total_count')->nullable();
             $table->text('details')->nullable();
-            $table->foreignId('rider_id')->references('id')->on('users')->onDelete('cascade')->nullable();
+            $table->foreignId('rider_id')->references('id')->on('delivery_riders')->onDelete('cascade')->nullable();
             $table->foreignId('shop_id')->references('id')->on('shops')->onDelete('cascade')->nullable();
-            $table->enum('status',['collecting','packaging','ready','completed'])->default('collecting');
-            $table->enum('time',['morning','day','evening','night']);
+            $table->enum('status',['collecting','route','ready','completed'])->default('collecting');
+            $table->enum('time',['morning','day','evening','night'])->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

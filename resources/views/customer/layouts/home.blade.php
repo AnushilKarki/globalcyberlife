@@ -37,7 +37,7 @@
         <div class="sidebar-menu">
             <div class="sidebar-header">
                 <div class="logo">
-                <a href="{{ route('home') }}"><img src="assets/images/icon/logo.png" alt="logo"></a>
+                <a href="{{ route('home') }}">Dashboard</a>
                 </div>
             </div>
             <div class="main-menu">
@@ -48,20 +48,33 @@
                                 <a href="javascript:void(0)" aria-expanded="true"><i class="ti-dashboard"></i><span>Dashboard</span></a>
                                
                             </li>
+                            @if (auth()->user()->hasRole('admin'))
+                          
+                            <li><a href="/admin"><i class="ti-dashboard"></i> <span>Main Admin Dashboard</span></a></li>
+                          @endif
+                         
+                            @if (auth()->user()->hasRole('shopadmin'))
+                          
+                            <li><a href="/shopadmin"><i class="ti-dashboard"></i> <span>ShopAdmin Dashboard</span></a></li>
+                            @endif
+                            @if (auth()->user()->hasRole('rider'))
+                          
+                          <li><a href="/riderhome"><i class="ti-dashboard"></i> <span>Rider Dashboard</span></a></li>
+                          @endif
                             <li><a href="{{ route('customerorders.index') }}"><i class="ti-receipt"></i> <span>Orders</span></a></li>
                             <li><a href="{{ route('customerpurchasereturns.index') }}"><i class="ti-receipt"></i> <span>Exchange/Return</span></a></li>
 
 
                            
                             <li><a href="{{ route('complains.index') }}"><i class="ti-envelope"></i> <span>Complain</span></a></li>
-                            <li><a href="{{ route('notes.index') }}"><i class="ti-write"></i> <span>Note</span></a></li>
-                            <li><a href="{{ route('credits.index') }}"><i class="ti-receipt"></i> <span>Credit</span></a></li>
+                         
+                           
                             <li><a href="{{ route('profiles.index') }}"><i class="ti-receipt"></i> <span>Profile</span></a></li>
                             <li><a href="{{ route('discounts.index') }}"><i class="ti-receipt"></i> <span>Discounts</span></a></li>
                             <li><a href="{{ route('customerservices.index') }}"><i class="ti-receipt"></i> <span>Customer Service</span></a></li>
                             <li><a href="{{ route('easyorders.index') }}"><i class="ti-receipt"></i> <span>Easy Order</span></a></li>
 
-                            <li><a href="{{ route('notices.index') }}"><i class="ti-receipt"></i> <span>Notice</span></a></li>
+                            <li><a href="invoice.html"><i class="ti-receipt"></i> <span>Payment</span></a></li>
 
                          
 
@@ -140,9 +153,7 @@
                     <div class="col-sm-6">
                         <div class="breadcrumbs-area clearfix">
                             <h4 class="page-title pull-left">Customer Dashboard</h4>
-                            @if (auth()->user()->hasRole('shopadmin'))
-                            <a href="/shopadmin"><i class="ti-receipt"></i> <span>GOTO Shop Admin Dashboard</span></a>
-                            @endif
+                          
                             <ul class="breadcrumbs pull-left">
                                
                               
@@ -295,6 +306,13 @@
     zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
     ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];
     </script>
+    
+    <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+    <script src="https://www.amcharts.com/lib/3/pie.js"></script>
+    <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+    <script src="https://www.amcharts.com/lib/3/plugins/animate/animate.min.js"></script>
+    <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+    <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
     <!-- all line chart activation -->
     <script src="/assets/js/line-chart.js"></script>
     <!-- all bar chart activation -->

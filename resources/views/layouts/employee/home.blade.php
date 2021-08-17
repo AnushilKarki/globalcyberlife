@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>srtdash - Ecommerce Dashboard</title>
+    <title> Employee Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="assets/images/icon/favicon.ico">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -56,9 +56,13 @@
                           
                            
                           
-                            <li><a href="invoice.html"><i class="ti-receipt"></i> <span>Invoice Summary</span></a></li>
+                            <li><a href="invoice.html"><i class="ti-receipt"></i> <span>Earning</span></a></li>
                            
-                           
+                            <li><a href="{{ route('ridertasks.index') }}"><i class="ti-receipt"></i> <span>Task</span></a></li>
+                            <li><a href="invoice.html"><i class="ti-receipt"></i> <span>Leaderboard</span></a></li>
+                            <li><a href="invoice.html"><i class="ti-receipt"></i> <span>Payment</span></a></li>
+                            <li><a href="invoice.html"><i class="ti-receipt"></i> <span>Team</span></a></li>
+                            <li><a href="invoice.html"><i class="ti-receipt"></i> <span>Schedule Metting</span></a></li>
                            
                         </ul>
                     </nav>

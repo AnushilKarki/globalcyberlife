@@ -16,5 +16,9 @@ class DeliveryRider extends Model
     {
         return $this->belongsTo('App\Models\User','user_id');
     }
+    public function route()
+    {
+        return $this->hasMany('App\Models\Route','rider_id');
+    }
     protected $table ='delivery_riders';
 }

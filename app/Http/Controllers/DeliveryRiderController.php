@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\DeliveryRider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DeliveryRiderController extends Controller
 {
@@ -13,7 +14,7 @@ class DeliveryRiderController extends Controller
      */
     public function index()
     {
-        //
+        return view('delivery.registerrider');
     }
 
     /**
@@ -34,7 +35,18 @@ class DeliveryRiderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $userid= auth()->id();
+        $riders = new DeliveryRider();
+        $riders->user_id=$userid;
+        $riders->vehicle_name=$request->input('model');
+        $riders->name=$request->input('name');
+        $riders->address=$request->input('address');
+        $riders->phone=$request->input('contact');
+        $riders->vehicle_type=$request->input('type');
+        $riders->job_type=$request->input('jobtype');
+     
+$riders->save();
+return redirect()->back();
     }
 
     /**

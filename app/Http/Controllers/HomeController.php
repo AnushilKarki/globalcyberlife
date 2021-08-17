@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 use DB;
 use App\Models\Product;
+use App\Models\Delivery_task;
 use App\Models\Shop;
 use Illuminate\Http\Request;
 use TCG\Voyager\Models\Category;
+use App\Models\Gift;
 use PDF;
 class HomeController extends Controller
 {
@@ -61,11 +63,10 @@ class HomeController extends Controller
 $advertisement=DB::table('advertisements')->get();
         $shop = Shop::take(3)->get();
         $arrival = Product::take(30)->get();
-
-        return view('welcome', ['advertisements'=>$advertisement,'shops'=>$shop,'arrivals'=>$arrival,'products' => $products,'categories'=>$categories,'feature'=>$featuredproducts,'hemps'=>$hemps,'foldings'=>$foldings,'culturals'=>$culturals,'cosmetics'=>$cosmetics]);
+$gift = Gift::take(5)->get();
+        return view('welcome', ['gifts'=>$gift,'advertisements'=>$advertisement,'shops'=>$shop,'arrivals'=>$arrival,'products' => $products,'categories'=>$categories,'feature'=>$featuredproducts,'hemps'=>$hemps,'foldings'=>$foldings,'culturals'=>$culturals,'cosmetics'=>$cosmetics]);
       
     }
 
 
-    
 }

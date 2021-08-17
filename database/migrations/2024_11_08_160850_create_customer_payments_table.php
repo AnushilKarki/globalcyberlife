@@ -31,7 +31,7 @@ class CreateCustomerPaymentsTable extends Migration
             $table->date('date')->nullable();
             $table->float('discount_amount')->nullable();
             $table->enum('payment_method',['cash_on_delivery','card','mobile_wallet'])->default('cash_on_delivery');
-            $table->enum('status',['completed','remaining','pending'])->default('pending');
+            $table->enum('status',['completed','remaining','pending','verified'])->default('pending');
             $table->text('note')->nullable();
             $table->timestamps();
         });

@@ -23,8 +23,14 @@ use App\Http\Controllers\CustomerServiceController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\CustomerPaymentController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\DeliveryRiderController;
+use App\Http\Controllers\DeliveryParcelController;
+use App\Http\Controllers\DeliveryTaskController;
 use App\Http\Controllers\Shopadmin\ShopOrderController;
-
+use App\Http\Controllers\Rider\TaskController;
+use App\Http\Controllers\Rider\RiderTaskController;
+use App\Http\Controllers\Rider\EarningController;
+use App\Http\Controllers\Rider\PaymentController;
 use App\Http\Controllers\Shopadmin\ShopOrderReturnController;
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +42,7 @@ use App\Http\Controllers\Shopadmin\ShopOrderReturnController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+use App\Models\Shop;
 
 
 Route::group(['prefix' => 'admin'], function () {
@@ -45,7 +51,6 @@ Route::group(['prefix' => 'admin'], function () {
 
 
 Route::get('/', [HomeController::class,'index'])->name('home');
-
 
 
 Route::middleware(['auth'])->get('/home',function(){
@@ -110,6 +115,38 @@ Route::resource('shoporders', ShopOrderController::class)->middleware(['auth','r
 
 Route::resource('shoporderreturns', ShopOrderReturnController::class)->middleware(['auth','role:shopadmin']);
 
+//route for riders control
+Route::middleware(['auth','role:rider'])->get('/riderhome',function(){
+    return view('employee.home');
+});
+
+
+Route::resource('riders', DeliveryRiderController::class)->middleware(['auth']);
+
+Route::resource('parcels', DeliveryParcelController::class)->middleware(['auth']);
+
+Route::resource('deliverytasks', DeliveryTaskController::class)->middleware(['auth']);
+
+Route::middleware(['auth'])->get('/verifytask',[DeliveryTaskController::class,'verify'])->name('verifytask');
+
+
+Route::resource('updatetasks', RiderTaskController::class)->middleware(['auth']);
+
+Route::resource('ridertasks',TaskController::class)->middleware(['auth']);
+Route::middleware(['auth'])->get('/update',[TaskController::class,'up']);
+Route::middleware(['auth'])->put('/completetask/{id}',[TaskController::class,'complete'])->name('complete');
+Route::middleware(['auth'])->put('/failtask/{id}',[TaskController::class,'fail'])->name('fail');
+
+Route::resource('riderearnings',EarningController::class)->middleware(['auth']);
+
+Route::resource('riderpayments',PaymentController::class)->middleware(['auth']);
+
+Route::middleware(['auth'])->put('/deliverytask',[DeliveryTaskController::class,'mytask'])->name('ridertasks.up');
+
+Route::middleware(['auth'])->get('/deliverytaskedit/{id}',[DeliveryTaskController::class,'action'])->name('deliverytasks.action');
+
+//end rider route
+
 Route::middleware(['auth'])->get('/changepassword',function(){
     return view('auth.update-password');
 });
@@ -155,6 +192,10 @@ Route::get('/products/searchbyprice', [ProductController::class,'searchbyprice']
 
 Route::resource('products', ProductController::class);
 
+Route::get('/delivery',function(){
+return view('delivery.index');
+}
+);
 
 // Route::get('/po',CouponController::class,'pdf');
 // // $pdf = PDF::loadView('pdf.invoice',['cartitems'=>$cartitems]);

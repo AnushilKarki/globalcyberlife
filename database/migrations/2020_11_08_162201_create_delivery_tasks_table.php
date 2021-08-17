@@ -16,7 +16,7 @@ class CreateDeliveryTasksTable extends Migration
         Schema::create('delivery_tasks', function (Blueprint $table) {
             $table->id();
 
-            $table->enum('task_status',['pending','on_way','completed','failed'])->default('pending');
+            $table->enum('task_status',['pending','on_way','completed','failed','verified'])->default('pending');
             $table->foreignId('delivery_id')->references('id')->on('delivery_parcels')->onDelete('cascade')->nullable();
             $table->foreignId('delivery')->references('id')->on('deliveries')->onDelete('cascade')->nullable();
             $table->float('rider_earning')->nullable();

@@ -9,6 +9,7 @@ use TCG\Voyager\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Shop;
 use App\Models\User;
+use App\Models\Gift;
 class ShopController extends Controller
 {
     /**
@@ -62,8 +63,10 @@ class ShopController extends Controller
     public function show($id)
     {
         $products = Product::take(30)->get();
-        $categories = Category::whereNull('parent_id')->get();
-
+       
+        $gift = Gift::take(5)->get();
+       
+        $category = Category::whereNull('parent_id')->get();
   $featuredproducts = Product::where('id','LIKE','2')->get();
  $hemps= DB::table('products')
         ->join('product_categories', function ($join) {
@@ -95,12 +98,12 @@ class ShopController extends Controller
         })
         ->get();       
         $advertisement=DB::table('advertisements')->get();
-        $shop = Shop::take(3)->get();
+        $shop = Shop::take(6)->get();
         $arrival = Product::take(30)
         ->where('shop_id',$id)
         ->get();
 
-        return view('shop.index', ['advertisements'=>$advertisement,'shops'=>$shop,'arrivals'=>$arrival,'products' => $products,'categories'=>$categories,'feature'=>$featuredproducts,'hemps'=>$hemps,'foldings'=>$foldings,'culturals'=>$culturals,'cosmetics'=>$cosmetics]);
+        return view('shop.index', ['advertisements'=>$advertisement,'shops'=>$shop,'arrivals'=>$arrival,'products' => $products,'categories'=>$category,'feature'=>$featuredproducts,'hemps'=>$hemps,'foldings'=>$foldings,'culturals'=>$culturals,'cosmetics'=>$cosmetics,'gifts'=>$gift]);
       
     }
 

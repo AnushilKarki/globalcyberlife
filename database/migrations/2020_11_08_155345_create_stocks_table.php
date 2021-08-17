@@ -20,6 +20,7 @@ class CreateStocksTable extends Migration
             $table->string('color')->nullable();
             $table->string('size')->nullable();
             $table->integer('quantity')->nullable();
+            $table->flaot('weight')->nullable();
             $table->string('images')->nullable();
             $table->timestamps();
         });

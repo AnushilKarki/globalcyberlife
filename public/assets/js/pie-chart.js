@@ -353,7 +353,7 @@ if ($('#highpiechart6').length) {
             plotShadow: false
         },
         title: {
-            text: '<br>Values<br>',
+            text: '<br>Brands<br>',
             align: 'center',
             verticalAlign: 'middle',
             y: 40
@@ -382,9 +382,10 @@ if ($('#highpiechart6').length) {
             name: 'Browser share',
             innerSize: '55%',
             data: [
-                ['USD', 58.9],
-                ['BTC', 13.29],
-                ['TCN', 13],
+                ['Kathmandu Hemp', 20],
+                ['Goldstar', 30],
+                ['Dhaka', 20],
+                ['chinese',30],
                 {
                     name: 'Other',
                     y: 7.61,

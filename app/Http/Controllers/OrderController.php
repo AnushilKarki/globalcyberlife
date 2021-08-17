@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use PDF;
 use App\Models\Shop;
+use App\Models\Stock;
 use App\Models\Sub_order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +29,12 @@ class OrderController extends Controller
     {
         //
     }
-
+    public function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+      }
     /**
      * Store a newly created resource in storage.
      *
@@ -74,7 +80,7 @@ class OrderController extends Controller
                     $order->billing_zipcode = $request->input('billing_zipcode');
                 }
                
-            
+            $order->order_type=$request->input('ordertype');
                 $order->grand_total=\Cart::session(auth()->id())->getTotal();
                 $order->item_count=\Cart::session(auth()->id())->getContent()->count();
         
@@ -98,13 +104,53 @@ class OrderController extends Controller
                 $cartitems= \Cart::session(auth()->id())->getContent();
                 foreach($cartitems as $item)
                 {
-                    $order->item()->attach($item->id,[
+                    $itemid=$item->attributes['product_id'];
+                    $itemcolor=$item->attributes['color'];
+                    $itemsize=$item->attributes['size'];
+                    $order->item()->attach($item->attributes['product_id'],[
                         'price' => $item->price,
-                        'quantity'=>$item->quantity
+                        'quantity'=>$item->quantity,
+                        'color'=>$itemcolor,
+                        'size'=>$itemsize
+                       
                     ]);
-      
+                    $q=$item->quantity;
+                    $qua = DB::table('stocks')
+                    ->where('product_id', $itemid)
+                    ->where('color',$item->attributes['color'])
+                    ->where('size',$item->attributes['size'])
+                    ->value('quantity');
+                    $quantities=$qua-$q;
+                    $quant = DB::table('stocks')
+                    ->where('product_id', $itemid)
+                    ->where('color',$item->attributes['color'])
+                    ->where('size',$item->attributes['size'])
+                    ->update(['quantity' => $quantities]);
+                    DB::update('update stocks set is_active = false where quantity <= 0');
+                   
+//To update product status when all stock are finished                   
+
+                    $quan = DB::table('stocks')
+                     ->where('product_id', $itemid)->get();
+
+ $finished = 0;
+// $qu = DB::table('stocks')->where('product_id',$item->id)->where('status','processing')->get(); 
+
+                    foreach($quan as $q){
+                     if($q->quantity>0){
+                         $finished=1;
+                     }
                 }
-        
+                   
+                    if($finished==0){
+                         $quant = DB::table('products')
+                         ->where('id', $itemid)
+                         ->update(['is_active' => false]);
+                     }
+                   
+                   
+                }
+               
                 //paypal
              
                 //payment option

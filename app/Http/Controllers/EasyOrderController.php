@@ -37,7 +37,15 @@ class EasyOrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $userid= auth()->id();
+        $easy = new Easy_order();
+        $easy->user_id= $userid;
+     $easy->product_id=$request->input('product');
+        $easy->phone_no=$request->input('phoneno');
+        $easy->address=$request->input('address');
+   
+$easy->save();
+return redirect()->back();
     }
 
     /**

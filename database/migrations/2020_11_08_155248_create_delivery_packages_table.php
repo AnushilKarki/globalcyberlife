@@ -29,8 +29,11 @@ class CreateDeliveryPackagesTable extends Migration
             $table->float('delivery_additional_rate')->nullable();
             $table->float('petrol_per_km')->nullable();
             $table->float('recharge_amount')->nullable();
-            $table->enum('delivery_type',['standard','express','custom','emergency','others']);
+            $table->enum('delivery_type',['standard','express','custom','emergency']);
             $table->enum('delivery_vehicle',['motorbike','cycle','electric_bike','electric_car','van','truck','taxi','bus','other']);
+            $table->integer('state')->nullable();
+            $table->string('district')->nullable();
+            $table->string('address')->nullable();
             $table->timestamps();
         });
     }

@@ -40,39 +40,39 @@ class Order extends Model
      }
      public function generateSubOrders()
      {
-         $orderItems = $this->item;
-         $userid= auth()->id();
-         foreach($orderItems->groupBy('shop_id') as $shopId => $products) {
- 
-             $shop = Shop::find($shopId);
- 
-             $suborder = $this->sub_order()->create([
-                 'order_id'=> $this->id,
-                 'shop_id'=> $shop->id,
-                 'grand_total'=> $products->sum('pivot.price'),
-                 'item_count'=> $products->count(),
-                 'user_id'=>  auth()->id()
-             ]);
- //shop id insub_order table refers to seller id sorry for error
-             foreach($products as $product) {
-                $suborder->item()->attach($product->id, ['price' => $product->pivot->price,'quantity' => $product->pivot->quantity]);
-                // DB::table('sub_order_items')->insert([
-                //     'sub_order_id' => $suborder->id,
-                //     'product_id' => $product->id,
-                //     'price'=>$product->pivot->price,
-                //     'quantity'=>$product->pivot->quantity
-                // ]);
-                // $shipping = SubOrderItems::create([
-                //     'product_id' => $product->id,
-                //     'sub_order_id' => $suborder->id,
-                //     'price' => $product->pivot->price,
-                //     'quantity' => $product->pivot->quantity,
-                    
-                // ]);
-                // $suborderitem=$this->sub_order()->suborderitems()->attach($product->id, ['price' => $product->pivot->price,'quantity' => $product->pivot->quantity]);
-             }
- 
-         }
+      
+
+ $orderItems = $this->item;
+       
+ $orders= \Cart::session(auth()->id())->getContent();
+ $userid= auth()->id();
+ foreach($orderItems->groupBy('shop_id') as $shopId => $products) {
+
+     $shop = Shop::find($shopId);
+     $pric=$products->sum('pivot.price');$quan=$products->sum('pivot.quantity');
+     $total=$pric*$quan;
+     $suborder = $this->sub_order()->create([
+         'order_id'=> $this->id,
+         'shop_id'=> $shop->id,
+         'grand_total'=>$total,
+         'item_count'=> $products->count(),
+         'user_id'=>  auth()->id()
+     ]);
+      foreach($orders as $product) {
+     
+       $color=$product->attributes['color'];
+        $size=$product->attributes['size'];
+        $product_id=$product->attributes['product_id'];
+        $suborder->item()->attach($product_id,[
+            'price' => $product->price,
+            'quantity'=>$product->quantity,
+            'color'=>$color,
+            'size'=>$size
+        ]);
+     }
+
+ }
+
  
      }
      protected $table='orders';

@@ -15,10 +15,11 @@ class CreateDeliveryParcelsTable extends Migration
     {
         Schema::create('delivery_parcels', function (Blueprint $table) {
             $table->id();
-            $table->string('pickup_address');
-            $table->string('delivery_address');
-            $table->string('pickup_contact_no');
-            $table->string('delivery_contact_no');
+            $table->string('track')->nullable();
+            $table->string('pickup_address')->nullable();
+            $table->string('delivery_address')->nullable();
+            $table->string('pickup_contact_no')->nullable();
+            $table->string('delivery_contact_no')->nullable();
             $table->foreignId('delivery_package_id')->references('id')->on('delivery_packages')->onDelete('cascade')->nullable();
             $table->string('particular')->nullable();
             $table->enum('available_time',['morning','day','evening','night'])->default('day');

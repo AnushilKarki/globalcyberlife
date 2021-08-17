@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
+use App\Models\Delivery_parcel;
 class DeliveryParcelController extends Controller
 {
     /**
@@ -13,7 +14,11 @@ class DeliveryParcelController extends Controller
      */
     public function index()
     {
-        //
+        $userid= auth()->id();
+        $parcel = DB::table('delivery_parcels')->where('shop_id',auth()->user()->shop->id)->where('status','pending')->get();
+
+        
+        return view('shopadmin.deliveryparcel.index',['parcels'=>$parcel]);   
     }
 
     /**
@@ -56,7 +61,8 @@ class DeliveryParcelController extends Controller
      */
     public function edit($id)
     {
-        //
+        $parcel=DB::table('delivery_parcels')->where('id',$id)->get();
+        return view('shopadmin.deliveryparcel.edit',['parcels'=>$parcel]);
     }
 
     /**

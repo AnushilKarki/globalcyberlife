@@ -148,12 +148,8 @@ span{
                     </form>
                     <button type="button" class="btn" onclick="openRegister()">I'm New Here</button>
                    
-                    <a href="/forgot-password">forgot password!!
-       no worry click this link to reset
-                                    
-                                    </a>
-                                    <a href="/sign-in/facebook">sign in with facebook</a>
-       <a href="/sign-in/github">sign in with github</a>
+                 
+                                   
                 </div>
                 <div class="card-back">
                     <h2>Sign Up</h2>
@@ -166,8 +162,8 @@ span{
                         <button type="submit" class="submit-btn">Submit</button>
                         <input type="checkbox"><span>Remember Me</span>
                     </form>
-                    <button type="button" class="btn" onclick="openLogin()">I've Already a Account</button>
-                    <a href="">Forgot Password</a>
+                    <button type="button" class="btn" onclick="openLogin()">I've a Account</button>
+                   
                 </div>
             </div>
         </div>

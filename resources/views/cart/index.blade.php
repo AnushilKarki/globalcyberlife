@@ -28,10 +28,10 @@
            <label for="show-menu" class="menu-icon"><i class="fas fa-bars    "></i></label>
        <div class="menu-items">
        <div class="logo">
-           <a href="home.html">E-com</a>
+           <a href="/">E-com</a>
        </div>
        <ul class="menu-links">
-           <li><a href="home.html">Home</a></li>
+           <li><a href="/home">Home</a></li>
            <li>
             <a href="#" class="desktop-links">Shop</a>
             <input type="checkbox" id="show-features">
@@ -101,9 +101,14 @@
             <div class="products">
     @foreach($cartitems as $item)
                 <div class="product">
-         
+         <?php 
+                   $itemid=$item->attributes['product_id'];
+         ?>
 				@php
-                                        $photo = App\Models\Product::where('id', $item->id)->value('image');
+
+                                        $photo = App\Models\Product::where('id', $itemid)->value('image');
+                                        $colors= App\Models\Stock::where('product_id',$itemid)->get();
+                                        $packages= App\Models\Delivery_package::where('delivery_task','parcel')->get();
                                     @endphp
                   
 					<img src="{{asset('storage/'.$photo)}}" >
@@ -112,22 +117,41 @@
     
                         <h3 class="product-name">{{ $item->name }}</h3>
     
-                        <h4 class="product-price">{{ $item->price }}</h4>
-    
-                        <h4 class="product-offer">50%</h4>
+                        <h4 class="product-price">Rs {{ $item->price }}</h4>
+                        <h4 class="product-price">Quantity: {{ $item->quantity }} </h4>
+
+                        <h4 class="product-price"> Color : {{ $item->attributes['color'] }}   &    Size : {{ $item->attributes['size'] }}</h4>
     
 
-						<form action="{{route('cart.update',$item->id)}}">
+						<form action="{{route('cart.update',$item->id)}}" id="validate" class="validate">
 							@csrf
-<input name="quan" type="number" value="{{ $item->quantity }}">
-<input type="submit" value="save">
+             
+<input name="quan" type="number" value="{{ $item->quantity }}" min="1" id="quans">
+<input name="productid" type="hidden" value="{{$itemid}}">
+<label for="cars">Choose a color:</label>
+
+<select name="color" id="colors">
+    @foreach($colors as $color)
+  <option value="{{ $color->color }}">{{ $color->color }}</option>
+  <?php  $weight=$color->weight;  ?>
+@endforeach 
+</select>
+<input name="weight" type="hidden" value="">
+<label for="weight">Weight : kg</label>
+
+<select name="size" id="sizes">
+    @foreach($colors as $color)
+  <option value="{{ $color->size }}">{{ $color->size }}</option>
+@endforeach 
+</select>
+
+<input type="submit" value="update">
 </form>
     
                         <p class="product-remove">
     
-                            <i class="fa fa-trash" aria-hidden="true"></i>
-    
-							<a href="{{ route('cart.destroy',$item->id) }}"> <span class="remove">Remove</span></a>
+                        <a href="{{route('cart.destroy',$item->id)}}">remove<i class="fa fa-trash" aria-hidden="true"></i></a>
+                          
 						
     
                         </p>
@@ -139,43 +163,46 @@
                 
     
             </div>
-    
+          
+
             <div class="cart-total">
     
                 <p>
     
                     <span>Total Price</span>
     
-                    <span> {{ \Cart::session(auth()->id())->getTotal()  }}</span>
+                    <span> Rs {{ \Cart::session(auth()->id())->getSubTotal()  }}</span>
     
                 </p>
     
                 <p>
     
-                    <span>Number of Items</span>
+                    <span>Item Count</span>
     
                     <span>{{ \Cart::session(auth()->id())->getContent()->count() }}</span>
     
                 </p>
     
                 <p>
+                <span>Delivery Charge :</span>
     
-                    <span>You Save</span>
-    
-                    <span>₹ 1,000</span>
-    
+    <span>{{ \Cart::session(auth()->id())->getContent()->count() }}</span>
+                   
                 </p>
+                <p>
+                <span>Discount :</span>
     
+    <span>{{ \Cart::session(auth()->id())->getContent()->count() }}</span>
+    <a href="{{ route('cart.checkout') }}">Checkout</a>
+                 
+                </p>
 
-				<a href="{{ route('cart.checkout') }}">Checkout</a>
-
+	
             </div>
     
         </div>
     
     </div>
-
-    <!-- End Deal Section -->
 
     <!-- Start Footer -->
 
@@ -225,6 +252,140 @@
 
    <!-- End Footer -->
 
+   <script>
+	$('#validate').validate({
+    roles: {
+        quan: {
+            required: true,
+        },
+        color: {
+            required: true,
+        },
+        size: {
+            required: true,
+        },
+       
+      
+       
+    },
+    messages: {
+        quan:"Please input quantity*",
+        color:"Please input color*",
+        size:"Please input size*"
+       
+    },
+});
+const form  = document.getElementsByTagName('form')[0];
+
+const quantity = document.getElementById('quans');
+
+const color = document.getElementById('colors');
+
+const size = document.getElementById('sizes');
+
+const quantityError = document.querySelector('#mail + span.error');
+const colorError = document.querySelector('#color + span.error');
+const sizeError = document.querySelector('#size + span.error');
+quantity.addEventListener('input', function (event) {
+  // Each time the user types something, we check if the
+  // form fields are valid.
+
+  if (quantity.validity.valid) {
+    // In case there is an error message visible, if the field
+    // is valid, we remove the error message.
+    quantityError.textContent = ''; // Reset the content of the message
+    quantityError.className = 'error'; // Reset the visual state of the message
+  } else {
+    // If there is still an error, show the correct error
+    showError();
+  }
+});
+color.addEventListener('select', function (event) {
+  // Each time the user types something, we check if the
+  // form fields are valid.
+
+  if (color.validity.valid) {
+    // In case there is an error message visible, if the field
+    // is valid, we remove the error message.
+    colorError.textContent = ''; // Reset the content of the message
+    colorError.className = 'error'; // Reset the visual state of the message
+  } else {
+    // If there is still an error, show the correct error
+    showError();
+  }
+});
+size.addEventListener('select', function (event) {
+  // Each time the user types something, we check if the
+  // form fields are valid.
+
+  if (size.validity.valid) {
+    // In case there is an error message visible, if the field
+    // is valid, we remove the error message.
+    sizeError.textContent = ''; // Reset the content of the message
+    sizeError.className = 'error'; // Reset the visual state of the message
+  } else {
+    // If there is still an error, show the correct error
+    showError();
+  }
+});
+
+form.addEventListener('submit', function (event) {
+  // if the email field is valid, we let the form submit
+
+  if(!quantity.validity.valid) {
+    // If it isn't, we display an appropriate error message
+    showError();
+    // Then we prevent the form from being sent by canceling the event
+    event.preventDefault();
+  }
+  if(!size.validity.valid) {
+    // If it isn't, we display an appropriate error message
+    showError();
+    // Then we prevent the form from being sent by canceling the event
+    event.preventDefault();
+  }
+  if(!color.validity.valid) {
+    // If it isn't, we display an appropriate error message
+    showError();
+    // Then we prevent the form from being sent by canceling the event
+    event.preventDefault();
+  }
+});
+
+function showError() {
+  if(quantity.validity.valueMissing) {
+    // If the field is empty,
+    // display the following error message.
+    quantityError.textContent = 'You need to enter an value for quantity.';
+  } else if(quantity.validity.typeMismatch) {
+    // If the field doesn't contain an email address,
+    // display the following error message.
+    quantityError.textContent = 'Entered value needs to be an color.';
+  } 
+  if(color.validity.valueMissing) {
+    // If the field is empty,
+    // display the following error message.
+    colorError.textContent = 'You need to enter an value for color.';
+  } else if(color.validity.typeMismatch) {
+    // If the field doesn't contain an email address,
+    // display the following error message.
+    colorError.textContent = 'Entered value needs to be an color.';
+  } 
+  if(size.validity.valueMissing) {
+    // If the field is empty,
+    // display the following error message.
+    sizeError.textContent = 'You need to enter an value for size.';
+  } else if(size.validity.typeMismatch) {
+    // If the field doesn't contain an email address,
+    // display the following error message.
+    sizeError.textContent = 'Entered value needs to be an size.';
+  } 
+  // Set the styling appropriately
+  quantityError.className = 'error active';
+  colorError.className = 'error active';
+  sizeError.className = 'error active';
+}
+</script>
     <!-- jquery cdn link  -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 

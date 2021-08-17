@@ -31,5 +31,19 @@ class Delivery_parcel extends Model
     {
         return $this->belongsTo('App\Models\Delivery_package','delivery_package_id');
     }
+    
+    public function employeepayment()
+    {
+        return $this->hasMany('App\Models\Employee_payment','parcel_id');
+    }
+
+    public function customerpayment()
+    {
+        return $this->hasMany('App\Models\Customer_payment','parcel_id');
+    }
+    public function shoppayment()
+    {
+        return $this->hasMany('App\Models\Shop_payment','parcel_id');
+    }
     protected $table='delivery_parcels';
 }

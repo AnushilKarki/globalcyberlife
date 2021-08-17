@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Stock;
 use App\Models\Shop;
+use App\Models\Gift;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
@@ -20,6 +21,7 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $gifts = Gift::take(5)->get();
         $shops = Shop::take(3)->get();
         $categoryId = request('category_id');
         $categoryName = null;
@@ -34,7 +36,7 @@ class ProductController extends Controller
         }
         $categories = Category::whereNull('parent_id')->get();
         
-        return view('product.index', compact('products','shops', 'categoryName','categories'));
+        return view('product.index', compact('products','shops', 'categoryName','categories','gifts'));
     }
 
     public function search(Request $request)
@@ -43,7 +45,8 @@ class ProductController extends Controller
         $query = $request->input('query');
         $products = Product::where('name','LIKE',"%$query%")->paginate(10);
         $categories = Category::whereNull('parent_id')->get();
-        return view('product.catalog',compact('products','shops','categories'));
+        $gifts = Gift::take(5)->get();
+        return view('product.catalog',compact('products','shops','categories','gifts'));
     }
 
     public function searchbyprice(Request $request)
@@ -66,7 +69,7 @@ class ProductController extends Controller
         $products = Product::where('id','LIKE',$product->id)->get();
         $stocks = Stock::where('product_id','LIKE',$product->id)->get();
         $categories = Category::whereNull('parent_id')->get();
-
+        $gifts = Gift::take(5)->get();
          
 // $colors = Str::of($color)->explode(' ');
 // $sizes = Str::of($quantity)->explode(' ');
@@ -97,7 +100,7 @@ class ProductController extends Controller
 // }
 
        
-        return view('product.show', compact('products','stocks','categories','shops'));
+        return view('product.show', compact('products','stocks','categories','gifts','shops'));
 
     }
 

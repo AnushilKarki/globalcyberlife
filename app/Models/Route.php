@@ -18,7 +18,7 @@ class Route extends Model
     }
     public function rider()
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo('App\Models\DeliveryRider','rider_id');
     }
     protected $table='routes';
 }

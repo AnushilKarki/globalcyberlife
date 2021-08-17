@@ -18,6 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('brand_name')->nullable();
             $table->string('description')->nullable();
+            $table->string('product_story')->nullable();
             $table->foreignId('shop_id')->references('id')->on('shops')->onDelete('cascade')->nullable();
             $table->float('selling_price');
             $table->float('cost_price');          
@@ -25,6 +26,7 @@ class CreateProductsTable extends Migration
             $table->string('multiple_image');
             $table->text('contact');
             $table->foreignId('gift_id')->references('id')->on('gifts')->onDelete('cascade')->nullable();
+            $table->boolean('is_active')->default(false);
             $table->timestamps();
         });
     }

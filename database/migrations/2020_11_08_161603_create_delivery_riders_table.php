@@ -21,6 +21,8 @@ class CreateDeliveryRidersTable extends Migration
             $table->string('address');
             $table->string('phone');
             $table->string('vehicle_no')->nullable();
+            $table->string('vehicle_type')->nullable();
+            $table->string('vehicle_name')->nullable();
             $table->string('license_no')->nullable();
             $table->string('document_image')->nullable();
             $table->enum('job_type',['part_time','full_time'])->nullable();

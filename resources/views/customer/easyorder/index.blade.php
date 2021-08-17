@@ -1,5 +1,7 @@
 @extends('customer.layouts.home')
+
 @section('content')
+@include('customer.easyorder.add')
 <div class="col-12 mt-5">
                         <div class="card">
                             <div class="card-body">
