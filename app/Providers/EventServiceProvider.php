@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Providers;
-
+use App\Models\Shop;
+use App\Observers\ShopObserver;
+use App\Observers\StockObserver;
+use App\Models\Stock;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -27,6 +30,7 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Shop::observe(ShopObserver::class);
+        Stock::observe(StockObserver::class);
     }
 }
