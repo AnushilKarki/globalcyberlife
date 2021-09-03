@@ -30,6 +30,8 @@ class CreateOrdersTable extends Migration
             $table->string('shipping_city')->nullable();
             $table->string('shipping_state')->nullable();
             $table->string('shipping_zipcode')->nullable();
+            $table->string('shipping_district')->nullable();
+            $table->string('shipping_time')->nullable();
             $table->string('shipping_phone');
             $table->string('notes')->nullable();
             

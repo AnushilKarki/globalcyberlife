@@ -15,7 +15,7 @@ class DeliveryParcelController extends Controller
     public function index()
     {
         $userid= auth()->id();
-        $parcel = DB::table('delivery_parcels')->where('shop_id',auth()->user()->shop->id)->where('status','pending')->get();
+        $parcel = DB::table('delivery_parcels')->where('status','pending')->get();
 
         
         return view('shopadmin.deliveryparcel.index',['parcels'=>$parcel]);   

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Order;
 use PDF;
+use App\Models\Delivery_parcel;
 use App\Models\Shop;
 use App\Models\Stock;
 use App\Models\Sub_order;
