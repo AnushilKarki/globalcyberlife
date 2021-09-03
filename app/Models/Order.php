@@ -46,6 +46,20 @@ class Order extends Model
        
  $orders= \Cart::session(auth()->id())->getContent();
  $userid= auth()->id();
+ $parcel = $this->delivery()->create([
+    'order_id'=>$this->id,
+    'delivery_type'=>'customer',
+    'delivery_contact_no'=>$this->shipping_phone,
+    'delivery_address'=>$this->shipping_address,
+    'user_id'=>$userid,
+    'total_amount_collection'=>$this->grand_total,
+    'status'=>'pending',
+    'particular'=>'online shopping',
+    'item_count'=>$this->item_count,
+    'delivery_charge'=>$this->delivery_charge,
+    'track'=> uniqid('no-')
+    
+]);
  foreach($orderItems->groupBy('shop_id') as $shopId => $products) {
 
      $shop = Shop::find($shopId);
@@ -58,6 +72,7 @@ class Order extends Model
          'item_count'=> $products->count(),
          'user_id'=>  auth()->id()
      ]);
+    
       foreach($orders as $product) {
      
        $color=$product->attributes['color'];

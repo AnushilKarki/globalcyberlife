@@ -1,5 +1,4 @@
-@extends('customer.layouts.home')
-@section('content')
+
 @extends('customer.layouts.home')
 @section('content')
 <div class="col-12 mt-5">
@@ -46,5 +45,4 @@
                             </div>
                         </div>
                     </div>
-@endsection
 @endsection

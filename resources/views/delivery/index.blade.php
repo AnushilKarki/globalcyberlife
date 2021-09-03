@@ -327,7 +327,7 @@ textarea {
 <div class="topofnav">
 
 <ul id="menu1">
-  <li><h3>Franchise Oppertunity</h3></li>
+  <li><h3>Franchise a friend oppertunity only on global cyberlife</h3></li>
 
 
 </ul>  

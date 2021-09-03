@@ -26,10 +26,10 @@
        </div>
        <div class="password_confirmation">
           <label for="password_confirmation">password_confirmation</label>
-          <input type="password" id="password_confirmation" name="password_confirmation">
+          <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
        </div>
-    
-       <button>submit</button>
+    <br>
+       <button class="form-control">submit</button>
        </div>
     </form>
 @endsection

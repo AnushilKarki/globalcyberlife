@@ -163,15 +163,19 @@ Route::middleware(['auth'])->get('/addtocart/{product}',[CartController::class,'
 Route::middleware(['auth'])->get('/cart',[CartController::class,'index'])->name('cart.index');
 
 
+Route::middleware(['auth'])->post('/cart/delivery',[CartController::class,'delivery'])->name('cart.delivery');
+
 Route::middleware(['auth'])->get('/cartdestroy/{itemid}',[CartController::class,'destroy'])->name('cart.destroy');
 
 
 Route::middleware(['auth'])->get('/cartupdate/{itemid}',[CartController::class,'update'])->name('cart.update');
 
 
-Route::middleware(['auth'])->get('/cartcheckout',[CartController::class,'checkout'])->name('cart.checkout');
+Route::middleware(['auth'])->post('/cartcheckout',[CartController::class,'checkout'])->name('cart.checkout');
 
-Route::middleware(['auth'])->get('/cart/apply-coupon',[CartController::class,'applyCoupon'])->name('cart.coupon');
+Route::middleware(['auth'])->post('/cart/apply-coupon',[CartController::class,'applyCoupon'])->name('cart.coupon');
+
+Route::middleware(['auth'])->post('/cart/apply-shipping',[CartController::class,'shipping'])->name('cart.shipping');
 
 
 Route::resource('orders', OrderController::class)->middleware(['auth']);

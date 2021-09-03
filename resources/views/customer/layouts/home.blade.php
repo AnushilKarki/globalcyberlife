@@ -44,10 +44,7 @@
                 <div class="menu-inner">
                     <nav>
                         <ul class="metismenu" id="menu">
-                            <li class="active">
-                                <a href="javascript:void(0)" aria-expanded="true"><i class="ti-dashboard"></i><span>Dashboard</span></a>
-                               
-                            </li>
+                           
                             @if (auth()->user()->hasRole('admin'))
                           
                             <li><a href="/admin"><i class="ti-dashboard"></i> <span>Main Admin Dashboard</span></a></li>
@@ -74,8 +71,9 @@
                             <li><a href="{{ route('customerservices.index') }}"><i class="ti-receipt"></i> <span>Customer Service</span></a></li>
                             <li><a href="{{ route('easyorders.index') }}"><i class="ti-receipt"></i> <span>Easy Order</span></a></li>
 
-                            <li><a href="invoice.html"><i class="ti-receipt"></i> <span>Payment</span></a></li>
-
+                            <li><a href="#"><i class="ti-receipt"></i> <span>Payment</span></a></li>
+                            <li><a href="#"><i class="ti-receipt"></i> <span>Parcel</span></a></li>
+                            <li><a href="#"><i class="ti-envelope"></i> <span>Review</span></a></li>
                          
 
 

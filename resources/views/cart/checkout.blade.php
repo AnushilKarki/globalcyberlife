@@ -238,32 +238,9 @@ span.price {
 						<label for="city"><i class="fa fa-institution"></i> Phone no </label>
                         <input type="text" id="city" name="shipping_phone" placeholder="9849594857" required>
 
-						<label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
-                        <input type="text" id="adr" name="shipping_address" placeholder="balkumari " required>
-                        <label for="city"><i class="fa fa-institution"></i> City</label>
-                        <input type="text" id="city" name="shipping_city" placeholder="Lalitpur" required>
-						<label for="country"><i class="fa fa-institution"></i> Country</label>
-                        <input type="text" id="city" name="country_name" placeholder="Lalitpur" required>
+						
 
-                        <div class="row">
-                            <div class="col-50">
-                               
-								<label for="state">State / Divition</label>
-											<select name="shipping_state" id="state-province">
-												<option value="divition" selected="selected">1</option>
-												<option>2</option>
-												<option>3</option>
-												<option>4</option>
-												<option>5</option>
-												<option>6</option>
-												<option>7</option>
-											</select>
-                            </div>
-                            <div class="col-50">
-                                <label for="zip">Zip</label>
-                                <input type="text" id="zip" name="shipping_zipcode" placeholder="44600"required>
-                            </div>
-                        </div>
+                      
                     </div>
 
                     <div class="col-50">
@@ -283,13 +260,26 @@ span.price {
 
                         
                     </div>
-					<div class="col-50">
-                        <h3>Cart Total : </h3>
+                    <div class="col-50">
+                        <h3>Delivery Charge : </h3>
+                        <h3>Rs : </h3>
                         <br>
                         <br>
 
 										
-										<h3>Rs : {{\Cart::session(auth()->id())->getTotal()}}</h3>
+										
+                        
+                      
+                        
+                    </div>
+					<div class="col-50">
+                        <h3>Cart Total : </h3>
+                        <h3>Rs : {{\Cart::session(auth()->id())->getTotal()}}</h3>
+                        <br>
+                        <br>
+
+										
+										
                         
                       
                         

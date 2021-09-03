@@ -18,6 +18,8 @@ class CreateDistributionCentersTable extends Migration
             $table->foreignId('shop_id')->references('id')->on('shops')->onDelete('cascade')->nullable();
             $table->string('particular');
             $table->string('location');
+            $table->float('longitude',8,4)->nullable();
+            $table->float('latitude',8,4)->nullable();
             $table->string('contact');
             $table->text('objective')->nullable();
             $table->enum('type',['pickndrop','warehouse','return','business','others']);

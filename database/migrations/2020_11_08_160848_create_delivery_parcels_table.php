@@ -28,11 +28,11 @@ class CreateDeliveryParcelsTable extends Migration
             $table->float('km')->nullable();
             $table->float('discount',8,2)->nullable();
             $table->float('delivery_charge',8,2)->nullable();
-
+            $table->string('review')->nullable();
             $table->enum('status',['pending','packaging_completed','ready_to_deliver','delivery_completed'])->default('pending');
             $table->foreignId('shop_id')->references('id')->on('shops')->onDelete('cascade')->nullable();
             $table->foreignId('order_id')->references('id')->on('orders')->onDelete('cascade')->nullable();
-           
+            $table->integer('item_count')->nullable();
             $table->enum('delivery_type',['customer','supplier','user','return'])->nullable();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade')->nullable();
             $table->boolean('is_paid')->default(false);
