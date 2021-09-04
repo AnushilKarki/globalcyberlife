@@ -127,14 +127,13 @@
 
 <span>
   <label for="district">Your address</label>
-  <input type="text" name="address"list="address" />
-<datalist id="address">
-@foreach($packages as $package)
-  <option value="{{ $package->address }}">{{ $package->address }}</option>
 
-@endforeach 
-</datalist>
+<select name="address" id="sizes">
+                @foreach($addre as $package)
+  <option value="{{ $package->address }}">Near {{ $package->address }}</option>
 
+@endforeach
+</select>
             <br>   
                 <label for="district">Delivery Time</label>
   <input type="text" name="time"list="time" />
@@ -183,7 +182,7 @@
                 <p>
     
     <span>Details :</span>
-
+   
     <span> </span>
 
 </p>

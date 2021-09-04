@@ -21,7 +21,7 @@ class CreateOrdersTable extends Migration
             $table->float('delivery_charge')->nullable();
             $table->integer('item_count')->nullable();
             $table->boolean('is_paid')->default(false);
-            $table->enum('payment_method',['cash_on_delivery','card','mobile_wallet'])->default('cash_on_delivery');
+            $table->enum('payment_method',['cash_on_delivery','pre_payment','card','mobile_wallet'])->default('cash_on_delivery');
             $table->string('order_number');
             $table->enum('order_type',['gift','shopping'])->default('shopping');
 
@@ -32,9 +32,10 @@ class CreateOrdersTable extends Migration
             $table->string('shipping_zipcode')->nullable();
             $table->string('shipping_district')->nullable();
             $table->string('shipping_time')->nullable();
-            $table->string('shipping_phone');
+            $table->string('shipping_phone')->nullable();
             $table->string('notes')->nullable();
-            
+            $table->string('pickup_address')->nullable();
+            $table->string('pickup_contact')->nullable();
     $table->string('paypal_orderid')->nullable();
 
             $table->string('billing_fullname')->nullable();

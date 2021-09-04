@@ -197,7 +197,8 @@ Route::get('/products/searchbyprice', [ProductController::class,'searchbyprice']
 Route::resource('products', ProductController::class);
 
 Route::get('/delivery',function(){
-return view('delivery.index');
+    $status=NULL;
+return view('delivery.index',compact('status'));
 }
 );
 
@@ -223,3 +224,12 @@ Route::get('/pdf',function(){
     $pdf->loadHTML('<h1>Test</h1>');
     return $pdf->stream();
 });
+
+//delivery company 
+Route::post('/franchise',[HomeController::class,'franchise'])->name('franchise.store');
+
+Route::post('/rider',[HomeController::class,'riderregister'])->name('rider.store');
+
+Route::post('/storeparcel',[HomeController::class,'storeparcel'])->name('package.store');
+
+Route::post('/trackparcel',[HomeController::class,'trackparcel'])->name('parcel.track');

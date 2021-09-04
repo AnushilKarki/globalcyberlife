@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Shop;
 use App\Models\Delivery_package;
+use App\Models\DeliveryPackageAddress;
 use App\Models\DistributionCenter;
 use TCG\Voyager\Models\Category;
 use App\Models\Gift;
@@ -55,9 +56,12 @@ $totalweight+=$weight;
 
 }
 }
+$d_p_id= Delivery_package::where('district',$location)->where('delivery_type','standard')->value('id');
 $state= Delivery_package::where('district',$location)->value('state');
+$addre = DeliveryPackageAddress::where('delivery_package_id',$d_p_id)->get();
         $packages= Delivery_package::where('district',$location)->get();
-        return view('cart.delivery',compact('totalweight','cartitems','packages','shops','categories','location','state'));
+        
+        return view('cart.delivery',compact('totalweight','cartitems','packages','shops','categories','location','state','addre'));
     }
     public function destroy($itemid)
     {
@@ -111,19 +115,19 @@ $state= Delivery_package::where('district',$location)->value('state');
        return view('cart.checkout',['shops'=>$shop,'gifts'=>$gift,'categories'=>$category]);
    }
    public function shipping(Request $request){
-
+    $categories = Category::whereNull('parent_id')->get();
+    $shops = Shop::take(3)->get();
+   
     $type=$request->input('type');
+    $gifts = Gift::take(5)->get();
     $district=$request->input('location');
+    
+   
     $distribution=DistributionCenter::where('location',$district)->get();
-    foreach($distribution as $d){
-        $distribution_latitude=$d->latitude;
-        $distribution_longitude=$d->longitude;
-        $distribution_contact=$d->contact;
-        $distribution_address=$d->particular;
-    }
+  
     $address=$request->input('address');
     $time=$request->input('time');
-    $weight=$request->input('weight');
+    $totalweight=$request->input('weight');
     $state=$request->input('state');
     $deliveryData = Delivery_package::where('delivery_type', $type)->where('district', $district)->get();
    foreach($deliveryData as $d){
@@ -131,46 +135,25 @@ $state= Delivery_package::where('district',$location)->value('state');
     $delivery_max_charge=$d->delivery_max_charge;
     $delivery_min_charge=$d->delivery_min_charge;
     $delivery_rider_percent=$d->delivery_rider_rate;
-
+$delivery_package_id=$d->id;
    }
+if($totalweight >= 3){
+  $charge = $delivery_max_charge;
+}
+elseif($totalweight < 3){
+  $charge = $delivery_min_charge;
+}
+    // code to add shipping charge
+    $shipping = new \Darryldecode\Cart\CartCondition(array(
+        'name' => 'shipping_charge',
+        'type' => $type,
+        'target' => 'subtotal',
+        'value' => $charge,
+    ));
 
-   function distance($lat1, $lon1, $lat2, $lon2, $unit) {
-    if (($lat1 == $lat2) && ($lon1 == $lon2)) {
-      return 0;
-    }
-    else {
-      $theta = $lon1 - $lon2;
-      $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
-      $dist = acos($dist);
-      $dist = rad2deg($dist);
-      $miles = $dist * 60 * 1.1515;
-      $unit = strtoupper($unit);
-  
-      if ($unit == "K") {
-        return ($miles * 1.609344);
-      } else if ($unit == "N") {
-        return ($miles * 0.8684);
-      } else {
-        return $miles;
-      }
-    }
-  }
-  
- 
-  $km= distance(27.6756, 85.3459, 27.7166, 85.3485, "K") . " Kilometers<br>";
-  return $km;
+    \Cart::session(auth()->id())->condition($shipping); // for a speicifc user's cart
 
-    //code to add shipping charge
-    // $shipping = new \Darryldecode\Cart\CartCondition(array(
-    //     'name' => $couponData->name,
-    //     'type' => $couponData->type,
-    //     'target' => 'total',
-    //     'value' => $couponData->value,
-    // ));
-
-    // \Cart::session(auth()->id())->condition($condition1); // for a speicifc user's cart
-
-
+    return view('cart.checkout',compact('distribution','type','time','totalweight','gifts','shops','categories','district','state','address','charge'));
     // return back()->withMessage('shipping charge applied');
    }
     public function applyCoupon(Request $request)

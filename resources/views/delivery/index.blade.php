@@ -306,7 +306,8 @@ textarea {
 
     
     <div class="trackParcel" id="trackParcel1">
-      <form>
+    <form method="post" action="{{ route('parcel.track') }}">
+        @csrf
         <div class="cross"><i class="fa fa-times" aria-hidden="true" id="cross1"></i></div>
         <h2>Shipment Summary</h2><br>
     
@@ -314,7 +315,7 @@ textarea {
         <br>
         <div class="field"><br>
           <label>Shipment ID:</label>
-          <input type="text " id="shipmentID">
+          <input type="text" name="track"id="shipmentID">
           <button type="submit">Track</button>
         </div>
   
@@ -327,8 +328,13 @@ textarea {
 <div class="topofnav">
 
 <ul id="menu1">
-  <li><h3>Franchise a friend oppertunity only on global cyberlife</h3></li>
+<li><h3>Franchise a friend oppertunity only on global cyberlife</h3></li>
+@if($status==NULL)
 
+@else
+<li><h1>your parcel status is : {{ $status }} </h1></li>
+
+@endif
 
 </ul>  
 
@@ -369,23 +375,122 @@ textarea {
 </div>
   <!-- franchise registration -->
   <div class="franchise" id="franchise">
-      <form>
+  <form method="post" action="{{ route('franchise.store') }}">
+        @csrf
         <!-- Cross icon for cancelling the model-->
         <i class="fa fa-times" aria-hidden="true" id="cross3"></i><br>
         <div class="row">
           <div class="col1">
     
             Name:<br />
-            <input type="text" placeholder="ram shah" required><br><br>
+            <input type="text" placeholder="ram shah" name="name"required><br><br>
     
             Address:<br />
-            <input type="text" placeholder="100" required><br><br>
+            <input type="text" placeholder="100" name="address"required><br><br>
     
     
             franchise location:<br />
-            <input type="text" placeholder="dhangadi" required><br><br>
+            <input type="text" name="location" list="location" />
+<datalist id="location">
+
+  <option value="Bhojpur">Bhojpur</option>
+  <option value="Dhankuta">Dhankuta</option>
+  <option value="Ilam">Ilam</option>
+  <option value="Jhapa">Jhapa</option>
+  <option value="Khotang">Khotang</option>
+  <option value="Morang">Morang</option>
+  <option value="Okhaldhunga">Okhaldhunga</option>
+  <option value="Panchthar">Panchthar</option>
+  <option value="Sankhuwasabha">Sankhuwasabha</option>
+  <option value="Solukhumbu">Solukhumbu</option>
+  <option value="Sunsari">Sunsari</option>
+  <option value="Taplejung">Taplejung</option>
+  <option value="Tehrathum">Tehrathum</option>
+  <option value=" Udayapur"> Udayapur</option>
+
+  
+<option value="Bara">Bara</option>
+<option value="Parsa">Parsa</option>
+<option value="Dhanusha">Dhanusha</option>
+<option value="Mahottari">Mahottari</option>
+<option value="Rautahat">Rautahat</option>
+<option value="Saptari">Saptari</option>
+<option value="Sarlahi">Sarlahi</option>
+<option value="Siraha">Siraha</option>
+
+	
+
+
+<option value="Bhaktapur">Bhaktapur</option>
+<option value="Chitwan">Chitwan</option>
+<option value="Dhading">Dhading</option>
+<option value="Dolakha">Dolakha</option>
+<option value="Kathmandu">Kathmandu</option>
+<option value="Kavrepalanchok">Kavrepalanchok</option>
+<option value="Lalitpur">Lalitpur</option>
+<option value="Makwanpur">Makwanpur</option>
+<option value="Nuwakot">Nuwakot</option>
+<option value="Ramechhap">Ramechhap</option>
+<option value="Rasuwa">Rasuwa</option>
+<option value="Sindhuli">Sindhuli</option>
+<option value="Sindhupalchok">Sindhupalchok</option>
+
+
+	
+
+
+<option value="Baglung">Baglung</option>
+<option value="Gorkha">Gorkha</option>
+<option value="Kaski">Kaski</option>
+<option value="Lamjung">Lamjung</option>
+<option value="Manang">Manang</option>
+<option value="Mustang">Mustang</option>
+<option value="Myagdi">Myagdi</option>
+<option value="Nawalpur">Nawalpur</option>
+<option value="Parbat">Parbat</option>
+<option value="Syangja">Syangja</option>
+<option value="Tanahun">Tanahun</option>
+
+
+<option value="Arghakhanchi">Arghakhanchi</option>
+<option value="Banke">Banke</option>
+<option value="Bardiya">Bardiya</option>
+<option value="Dang">Dang</option>
+<option value="Eastern_Rukum">Eastern Rukum</option>
+<option value="Gulmi">Gulmi</option>
+<option value="Kapilavastu">Kapilavastu</option>
+<option value="Parasi">Parasi</option>
+<option value="Palpa">Palpa</option>
+<option value="Pyuthan">Pyuthan</option>
+<option value="Rolpa">Rolpa</option>
+<option value="Rupandehi">Rupandehi</option>
+
+
+<option value="Dailekh">Dailekh</option>
+<option value="Dolpa">Dolpa</option>
+<option value="Humla">Humla</option>
+<option value="Jajarkot">Jajarkot</option>
+<option value="Jumla">Jumla</option>
+<option value="Kalikot">Kalikot</option>
+<option value="Mugu">Mugu</option>
+<option value="Salyan">Salyan</option>
+<option value="Surkhet">Surkhet</option>
+<option value="Western_Rukum">Western Rukum</option>
+	
+
+<option value="Achham">Achham</option>
+<option value="Baitadi">Baitadi</option>
+<option value="Bajhang">Bajhang</option>
+<option value="Bajura">Bajura</option>
+<option value="Dadeldhura">Dadeldhura</option>
+<option value="Darchula">Darchula</option>
+<option value="Doti">Doti</option>
+<option value="Kailali">Kailali</option>
+<option value="Kanchanpur">Kanchanpur</option>
+</datalist>
+                   <br><br>
             Contact no:<br />
-            <input type="text" placeholder="9845******" required><br><br>
+            <input type="text" name="phone"placeholder="9845******" required><br><br>
     
     
           </div>
@@ -393,7 +498,7 @@ textarea {
           <div class="col1">
     
           Education <br />
-            <select name="cars" id="cars" required>
+            <select name="education" id="cars" required>
            
              
               <option value="slc">SLC</option>
@@ -404,7 +509,7 @@ textarea {
             </select><br><br>
     
              Working experience<br />
-            <select name="cars" id="cars" required>
+            <select name="experience" id="cars" required>
            
              
               <option value="yes">YES</option>
@@ -414,7 +519,7 @@ textarea {
     
     
             Investment :<br />
-            <select name="cars" id="cars" required>
+            <select name="investment" id="cars" required>
            
              
               <option value="small">Small</option>
@@ -423,7 +528,7 @@ textarea {
               <option value="verylarge">Very Large</option>
             </select><br><br>
             Are you excited to join us ? <br />
-            <select name="cars" id="cars" required>
+            <select name="excitement" id="cars" required>
            
              
               <option value="small">Excited</option>
@@ -437,11 +542,11 @@ textarea {
         <div class="something">
     
           Your Email:<br>
-          <input type="email" placeholder="abc123@gmail.com" id="email"><br><br><br>
+          <input type="email" name="email" placeholder="abc123@gmail.com" id="email"><br><br><br>
     
           Write your Queries:<br>
           <textarea placeholder="write about your quires/review"></textarea><br>
-          <input type="submit"class="hero" id="summit">
+          <input type="submit"class="hero" name="query"id="summit">
         </div>
       
       </form>
@@ -450,7 +555,7 @@ textarea {
     <!-- close franchise registration -->
   <!-- rider registration -->
   <div class="registerrider" id="registerrider">
-      <form method="post" action="{{ route('riders.store') }}">
+      <form method="post" action="{{ route('rider.store') }}">
         @csrf
         <!-- Cross icon for cancelling the model-->
         <i class="fa fa-times" aria-hidden="true" id="cross2"></i><br>
@@ -468,11 +573,21 @@ textarea {
             Contact no:<br />
             <input type="text" placeholder="9845******" name="contact" required><br><br>
             Working Location:<br />
-            <select name="area" id="cars" required>
+            <select name="location" id="cars" required>
               @foreach($areas as $area)
              
               <option value="{{ $area->name }}">{{ $area->name }}</option>
               @endforeach
+            </select><br><br>
+            Job shift :<br />
+            <select name="shift" id="cars" required>
+           
+             
+              <option value="morning">morning</option>
+              <option value="day">day</option>
+              <option value="evening">evening</option>
+              <option value="night">night</option>
+            
             </select><br><br>
           </div>
     
@@ -527,7 +642,7 @@ textarea {
           <input type="email" name="email" placeholder="abc123@gmail.com" id="email"><br><br><br>
     
           Write your Queries:<br>
-          <textarea placeholder="write about your quires/review" name="querry"></textarea><br>
+          <textarea placeholder="write about your quires/review" name="query"></textarea><br>
           <input type="submit"class="hero" id="summit"></button>
         </div>
       </form>
@@ -535,45 +650,49 @@ textarea {
     </div>
     <!-- close rider registration -->
 <div class="sendparcel" id="sendparcel">
-      <form>
+<form method="post" action="{{ route('package.store') }}">
+        @csrf
         <!-- Cross icon for cancelling the model-->
         <i class="fa fa-times" aria-hidden="true" id="cross"></i><br>
         <div class="row">
           <div class="col1">
     
             From:<br />
-            <input type="text" placeholder="eg : Kathmandu" required><br><br>
+            <input type="text" name="from" placeholder="eg : Kathmandu" required><br><br>
     
             Weight:<br />
-            <input type="text" placeholder="100" required><br><br>
+            <input type="text" placeholder="100" name="weight"required><br><br>
     
     
             Sender:<br />
-            <input type="text" placeholder="Sender's Full Name" required><br><br>
+            <input type="text" name="sender"placeholder="Sender's Full Name" required><br><br>
             Receiver:<br />
-            <input type="text" placeholder="Receiver Full Name" required><br><br>
+            <input type="text" name="receiver"placeholder="Receiver Full Name" required><br><br>
     
-    
+           Total Amount collection:<br />
+            <input type="text" placeholder="100" name="amount"required><br><br>
           </div>
     
           <div class="col1">
     
             To:<br />
-            <input type="text" placeholder="eg : Simara" required><br><br>
+            <input type="text" name="to" placeholder="eg : Simara" required><br><br>
     
-            Receiver District:<br />
-            <select name="cars" id="cars" required>
-              @foreach($areas as $area)
-             
-              <option value="{{ $area->name }}">{{ $area->name }}</option>
-              @endforeach
+            Delivery Time:<br />
+            <select name="time" id="cars" required>
+        
+            <option value="morning">morning</option>
+              <option value="day">day</option>
+            
+              <option value="evening">evening</option>
+              <option value="night">night</option>
             </select><br><br>
     
     
             Sender Mobile Number:<br />
-            <input type="text" placeholder="98********" required><br><br>
+            <input type="text" name="sender_phone" placeholder="98********" required><br><br>
             Receiver Mobile Number:<br />
-            <input type="text" placeholder="98********" required><br><br>
+            <input type="text" name="receiver_phone"placeholder="98********" required><br><br>
     
     
           </div>
@@ -581,10 +700,10 @@ textarea {
         <div class="something">
     
           Your Email:<br>
-          <input type="email" placeholder="abc123@gmail.com" id="email"><br><br><br>
+          <input type="email" name="email" placeholder="abc123@gmail.com" id="email"><br><br><br>
     
           Write your Queries:<br>
-          <textarea placeholder="write about your quires/review"></textarea><br>
+          <textarea name="query" placeholder="write about your quires/review"></textarea><br>
           <input type="submit"class="hero" id="summit"></button>
         </div>
       </form>

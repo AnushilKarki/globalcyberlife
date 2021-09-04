@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use DB;
 use App\Models\Product;
 use App\Models\Delivery_task;
+use App\Models\Delivery_parcel;
 use App\Models\Shop;
 use Illuminate\Http\Request;
 use TCG\Voyager\Models\Category;
@@ -68,5 +69,101 @@ $gift = Gift::take(5)->get();
       
     }
 
+public function franchise(Request $request){
+    DB::table('franchises')->insert([
+        [
+            'email' =>  $request->input('email'),
+             'name' => $request->input('name'),
+             'address'=> $request->input('address'),
+             'phone'=> $request->input('phone'),
+             'franchise_location'=> $request->input('location'),
+             'education'=> $request->input('education'),
+             'investment'=> $request->input('investment'),
+             'experience'=> $request->input('experience'),
+             'excitement'=> $request->input('excitement'),
+             'query'=> $request->input('query')
+             
+            ],
+      
+    ]);
+    return redirect()->back();
+}
+public function riderregister(Request $request){
+    DB::table('delivery_riders')->insert([
+        [
 
+             'name' => $request->input('name'),
+             'address'=> $request->input('address'),
+             'phone'=> $request->input('contact'),
+             'working_address'=> $request->input('location'),
+             'vehicle_name'=> $request->input('model'),
+             'vehicle_type'=> $request->input('type'),
+             'experience'=> $request->input('experience'),
+             'excitement'=> $request->input('excitement'),
+             'job_type'=> $request->input('jobtype'),
+             'email' =>  $request->input('email'),
+             'job_shift'=> $request->input('shift'),
+             'query'=> $request->input('query')
+             
+            ],
+      
+    ]);
+    return redirect()->back();
+}
+public function storeparcel(Request $request){
+    $userid= auth()->id();
+    if($userid==NULL){
+    DB::table('delivery_parcels')->insert([
+        [
+            'track'=> uniqid('no-'),
+             'pickup_address' => $request->input('from'),
+             'delivery_address'=> $request->input('to'),
+             'sender'=> $request->input('sender'),
+             'receiver'=> $request->input('receiver'),
+             'pickup_contact_no'=> $request->input('sender_phone'),
+             'delivery_contact_no'=> $request->input('receiver_phone'),
+             'particular'=>'parcel',
+             'available_time'=> $request->input('time'),
+             'total_amount_collection'=> $request->input('amount'),
+             'weight' =>  $request->input('weight'),
+             'status'=> 'pending',
+             'query'=> $request->input('query'),
+             'email'=>$request->input('email')
+             
+            ],
+      
+    ]);
+}
+else{
+    DB::table('delivery_parcels')->insert([
+        [
+            'track'=> uniqid('no-'),
+            'user_id'=>$userid,
+             'pickup_address' => $request->input('from'),
+             'delivery_address'=> $request->input('to'),
+             'sender'=> $request->input('sender'),
+             'receiver'=> $request->input('receiver'),
+             'pickup_contact_no'=> $request->input('sender_phone'),
+             'delivery_contact_no'=> $request->input('receiver_phone'),
+             'particular'=>'parcel',
+             'available_time'=> $request->input('time'),
+             'total_amount_collection'=> $request->input('amount'),
+             'weight' =>  $request->input('weight'),
+             'status'=> 'pending',
+             'query'=> $request->input('query'),
+             'email'=>$request->input('email')
+             
+            ],
+      
+    ]); 
+}
+    return redirect()->back();
+}
+
+public function trackparcel(Request $request){
+   $trackid=$request->input('track');
+$status=Delivery_parcel::where('track',$trackid)->value('status');
+
+return view('delivery.index',compact('status'));
+}
 }
