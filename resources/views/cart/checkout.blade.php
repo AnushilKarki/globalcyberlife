@@ -206,7 +206,8 @@ span.price {
 		 </ul>
 	 </li>
 		<li><a href="#">About US</a></li>
-		<li><a href="#">Feedback</a></li>
+        <li><a href="/delivery">Delivery office</a></li>
+           <li><a href="#">Help & Feedback</a></li>
 	</ul>
  </div>
  <a href="{{ route('cart.index') }}" class="menu-search"><i class="fas fa-shopping-cart"></i></a>

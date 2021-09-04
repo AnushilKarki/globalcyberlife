@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\GiftController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\ProductController;
@@ -180,7 +181,7 @@ Route::middleware(['auth'])->post('/cart/apply-shipping',[CartController::class,
 
 Route::resource('orders', OrderController::class)->middleware(['auth']);
 
-Route::resource('shops', ShopController::class)->middleware(['auth']);
+Route::resource('shops', ShopController::class);
 
 Route::middleware(['auth'])->get('/paypal/checkout/{order}',[PayPalController::class,'getExpressCheckout'])->name('paypal.checkout');
 
@@ -195,6 +196,8 @@ Route::get('/products/search', [ProductController::class,'search'])->name('produ
 Route::get('/products/searchbyprice', [ProductController::class,'searchbyprice'])->name('products.search.price');
 
 Route::resource('products', ProductController::class);
+
+Route::resource('gifts', GiftController::class);
 
 Route::get('/delivery',function(){
     $status=NULL;

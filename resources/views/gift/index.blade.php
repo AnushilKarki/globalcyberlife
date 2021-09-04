@@ -26,14 +26,9 @@
 
 <!-- Custom StyleSheet -->
 <link rel="stylesheet" href="/css/styles.css" />
-
-</head>
-<body>
-
-<!-- header section starts  -->
-
-
-
+<style>
+	
+</style>
 <header>
 
 <div class="nav-container">
@@ -94,7 +89,7 @@
          <input type="checkbox" id="show-features">
          <label for="show-features">Gift</label>
          <ul>                    @foreach($gifts as $gift)
-             <li>  <a href="{{ route('gifts.index',$gift->id) }}">{{ $gift->particular }}</a></li>
+             <li>  <a href="{{ route('products.index',$gift->id) }}">{{ $gift->particular }}</a></li>
 @endforeach
 
             
@@ -118,7 +113,20 @@
 </div>
 
 </header>
+</head>
+<body>
 
+<!-- header section starts  -->
+
+
+
+
+<div class="top container">
+
+
+   <img src="/images/frontb.jpg" alt="" />
+
+</div>
 <!-- header section ends -->
 
 <!-- home section starts  -->

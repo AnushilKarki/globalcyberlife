@@ -92,14 +92,15 @@
          <input type="checkbox" id="show-features">
          <label for="show-features">Gift</label>
          <ul>                    @foreach($gifts as $gift)
-             <li>  <a href="{{ route('products.index',$gift->id) }}">{{ $gift->particular }}</a></li>
+             <li>  <a href="{{ route('gifts.index',$gift->id) }}">{{ $gift->particular }}</a></li>
 @endforeach
 
             
          </ul>
      </li>
         <li><a href="#">About US</a></li>
-        <li><a href="#">Feedback</a></li>
+		<li><a href="/delivery">Delivery office</a></li>
+           <li><a href="#">Help & Feedback</a></li>
     </ul>
  </div>
  <a href="{{ route('cart.index') }}" class="menu-search"><i class="fas fa-shopping-cart"></i></a>
@@ -114,8 +115,14 @@
  
 </div>
 
+<section class="featured" >
+<div class="top container">
 
 
+   <img src="/images/frontb.jpg" alt="" />
+
+</div>
+</section>
 <!-- header section ends -->
 
 <!-- home section starts  -->
@@ -186,12 +193,12 @@
 <main>
 		<header>
 			<ul class="indicator">
-				<li data-filter="all" class="active"><a href="#">All</a></li>
-				<li data-filter="Blazer"><a href="#">Blazzer</a></li>
-				<li data-filter="Watch"><a href="#">Watch</a></li>
-				<li data-filter="Shoes"><a href="#">Shoes</a></li>
-				<li data-filter="Mobile"><a href="#">Mobiles</a></li>
-				<li data-filter="Accessories"><a href="#">Accessories</a></li>
+				<li data-filter="all" class="active">All</li>
+				<li data-filter="Blazer">Blazzer</li>
+				<li data-filter="Watch">Watch</li>
+				<li data-filter="Shoes">Shoes</li>
+				<li data-filter="Mobile">Mobiles</li>
+				<li data-filter="Accessories">Accessories</li>
 			</ul>
 			<div class="filter-condition">
 				<span>View As a</span>
