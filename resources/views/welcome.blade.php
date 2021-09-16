@@ -24,7 +24,7 @@
 <!-- Custom StyleSheet -->
 <link rel="stylesheet" href="/css/styles.css" />
 
-
+<link rel="stylesheet" href="/css/chat.css"/>
 <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/lightslider.css">
     <style>
@@ -66,6 +66,54 @@ text-align : center;
   
 }
 
+/*social icons styling starts*/
+.social {
+  position: fixed;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
+  transform: translate(-260px, 0);
+  z-index: 1;
+}
+.social a {
+  background: rgba(0, 0, 0, 0.4);
+  text-decoration: none;
+  text-transform: capitalize;
+  display: block;
+  margin: 5px;
+  width: 300px;
+  text-align: right;
+  margin-left: 0;
+  padding: 15px;
+  border-radius: 50px;
+  transition: 1s;
+  transition-property: transform;
+  color: aliceblue;
+  font-size: 20px;
+}
+.social a:hover {
+  transform: translate(140px, 10px);
+}
+.social i {
+  margin-left: 10px;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+.social a:nth-child(1) i {
+  color: #4267b2;
+}
+.social a:nth-child(2) i {
+  color: #8a3ab9;
+}
+.social a:nth-child(3) i {
+  color: #1da1f2;
+}
+.social a:nth-child(4) i {
+  color: #ff0000;
+}
 
 </style>
     <title>Menu</title>
@@ -87,7 +135,18 @@ text-align : center;
 </ul>  
 
 </div>
-
+  <!--   social icons   starts-->
+    
+  <div class="social">
+      <a href="">facebook<i class="fab fa-facebook" aria-hidden="true"></i></a>
+      <a href="">instagram<i class="fab fa-instagram" aria-hidden="true"></i></a>
+      <a href="">twitter<i class="fab fa-twitter" aria-hidden="true"></i></a>
+      <a href="">youtube<i class="fab fa-youtube" aria-hidden="true"></i></a>
+    </div>
+    
+    
+    
+    <!--   social icons  ends-->
        <nav>
          
            <input type="checkbox" id="show-search">
@@ -454,10 +513,56 @@ text-align : center;
           <img src="./images/brand2.png" alt="" />
         </div>
       </div>
+
     </section>
     <!-- End Product Section -->
 
     <!-- deal section starts  -->
+    
+  <!-- CHAT BAR BLOCK -->
+  <div class="chat-bar-collapsible">
+    <button id="chat-button" type="button" class="collapsible">Cyberlife sathi!
+      <i id="chat-icon" style="color: #fff;" class="fa fa-fw fa-comments-o"></i>
+    </button>
+  
+    <div class="content">
+      <div class="full-chat-block">
+        <!-- Message Container -->
+        <div class="outer-container">
+          <div class="chat-container">
+            <!-- Messages -->
+            <div id="chatbox">
+              <h5 id="chat-timestamp"></h5>
+              <p id="botStarterMessage" class="botText"><span>Loading...</span></p>
+            </div>
+  
+            <!-- User input box -->
+            <div class="chat-bar-input-block">
+              <div id="userInput">
+                <input id="textInput" class="input-box" type="text" name="msg"
+                  placeholder="Enter no to choose service">
+                <p></p>
+              </div>
+  
+              <div class="chat-bar-icons">
+                <i id="chat-icon" style="color: crimson;" class="fa fa-fw fa-heart" onclick="heartButton()"></i>
+                <i id="chat-icon" style="color: #333;" class="fa fa-fw fa-send" onclick="sendButton()"></i>
+              </div>
+            </div>
+  
+            <div id="chat-bar-bottom">
+              <p></p>
+            </div>
+  
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  
+  </div>
+  <!--chat bar ends-->
+
 
 </div>
 
@@ -522,11 +627,13 @@ text-align : center;
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
   <!-- Custom Script -->
   <script src="/js/index.js"></script>
-
+<script type="text/javascript" src="/js/chat.js"></script>
   <script type="text/javascript" src="/js/jquery.js"></script>
     <script type="text/javascript" src="/js/lightslider.js"></script>
     <script type="text/javascript" src="/js/script.js"></script>
-  
+  <script>
+    
+  </script>
 
 </body>
 </html>

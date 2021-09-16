@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use TCG\Voyager\Models\Category;
 use App\Models\Gift;
 use PDF;
+use App\Models\User;
 class HomeController extends Controller
 {
     /**
@@ -156,6 +157,16 @@ else{
             ],
       
     ]); 
+    
+$payment = DB::table('customer_payments')->insert([
+  
+    'particular'=>'delivery',
+    'remaining'=>$this->grand_total,
+    'payment_type'=>'to_pay',
+    'user_id'=>$userid,
+    'total'=>$request->input('amount'),
+    'status'=>'pending'
+]);
 }
     return redirect()->back();
 }
@@ -166,4 +177,20 @@ $status=Delivery_parcel::where('track',$trackid)->value('status');
 
 return view('delivery.index',compact('status'));
 }
+
+public function avatar(Request $request)
+   {
+  
+  $userid= auth()->id();
+  $user = User::find($userid);
+  $avatar = $request->file('image');
+
+  $filename = 'h';
+   $user->avatar=$filename;
+   $path = $request->file('image')->store('avatars');
+
+
+  $user->save();
+  return redirect()->back();
+  }
 }

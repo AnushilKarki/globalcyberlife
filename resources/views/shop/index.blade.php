@@ -119,7 +119,7 @@
 <div class="top container">
 
 
-   <img src="/images/frontb.jpg" alt="" />
+   <img src="/images/frontb.jpg" class="hero-img"alt="" />
 
 </div>
 </section>

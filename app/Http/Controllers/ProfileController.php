@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\User;
 class ProfileController extends Controller
 {
     /**
@@ -34,7 +34,7 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
@@ -68,7 +68,21 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+$userid= auth()->id();
+$user = User::find($userid);
+$avatar = $request->file('image');
+
+$name = $request->file('image')->getClientOriginalName();
+
+$user->avatar=$name;
+$path = $request->file('image')->store(
+    'avatars'.$name, 'public'
+);
+
+
+$user->save();
+return redirect()->back();
     }
 
     /**

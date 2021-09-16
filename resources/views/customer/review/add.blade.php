@@ -1,13 +1,10 @@
-@extends('customer.layouts.home')
-@section('content')
-@foreach($review as $comp)
 <div class="col-12 mt-5">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="header-title">review edit form</h4>
-                                        <form method="POST" action="{{ route('shopratings.update',$comp->id) }}">
+                                        <h4 class="header-title">Review form</h4>
+                                        <form method="POST" action="{{ route('shopratings.store') }}">
                                         @csrf 
-                                        @method('PUT') 
+                                          
                                            
                                       <h2>  <label for="cars">Review for service:</label></h2>
 
@@ -38,12 +35,10 @@
                                        
                                         <div class="form-group">
                                             <label for="example-text-input" class="col-form-label">Review</label>
-                                            <input class="form-control" type="text" id="example-text-input" value="{{ $comp->review}}" name="review">
+                                            <input class="form-control" type="text" id="example-text-input" name="review">
                                         </div>
                                             <button type="submit" class="btn btn-primary mt-4 pr-4 pl-4">Submit</button>
                                         </form>
                                     </div>
                                 </div>
                             </div>
-                            @endforeach
-@endsection

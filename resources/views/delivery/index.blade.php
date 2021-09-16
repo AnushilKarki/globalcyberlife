@@ -734,60 +734,66 @@ textarea {
     <!-- Testimonials -->
     <section class="section">
       <div class="testimonial-center container">
+        
+        @foreach($reviews as $review)
+<?php
+$uid=$review->user_id;
+$photo = App\Models\User::where('id', $uid)->value('avatar');
+$name = App\Models\User::where('id', $uid)->value('name');
+?>
         <div class="testimonial">
           <span>&ldquo;</span>
           <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Debitis,
-            fugiat labore. Veritatis et omnis consequatur.
+           {{ $review->review }}
           </p>
+          @if ($review->rating== 1)
           <div class="rating">
+            <i class="bx bxs-star"></i>
+            <i class="bx bx-star"></i>
+            <i class="bx bx-star"></i>
+            <i class="bx bx-star"></i>
+            <i class="bx bx-star"></i>
+          </div>
+@elseif($review->rating== 2)
+<div class="rating">
+            <i class="bx bxs-star"></i>
+            <i class="bx bxs-star"></i>
+            <i class="bx bx-star"></i>
+            <i class="bx bx-star"></i>
+            <i class="bx bx-star"></i>
+          </div>
+    @elseif($review->rating== 3)
+    <div class="rating">
+            <i class="bx bxs-star"></i>
+            <i class="bx bxs-star"></i>
+            <i class="bx bxs-star"></i>
+            <i class="bx bx-star"></i>
+            <i class="bx bx-star"></i>
+          </div>
+    @elseif($review->rating== 4)
+    <div class="rating">
             <i class="bx bxs-star"></i>
             <i class="bx bxs-star"></i>
             <i class="bx bxs-star"></i>
             <i class="bx bxs-star"></i>
             <i class="bx bx-star"></i>
           </div>
+    @else
+    <div class="rating">
+            <i class="bx bxs-star"></i>
+            <i class="bx bxs-star"></i>
+            <i class="bx bxs-star"></i>
+            <i class="bx bxs-star"></i>
+            <i class="bx bxs-star"></i>
+          </div>
+@endif
+          
           <div class="img-cover">
-            <img src="./images/profile1.jpg" alt="" />
+          <img src="{{'storage/avatars/'.$photo}}" alt="avatar">
           </div>
-          <h4>Will Smith</h4>
+          <h4>{{ $name }}</h4>
         </div>
-        <div class="testimonial">
-          <span>&ldquo;</span>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Debitis,
-            fugiat labore. Veritatis et omnis consequatur.
-          </p>
-          <div class="rating">
-            <i class="bx bxs-star"></i>
-            <i class="bx bxs-star"></i>
-            <i class="bx bxs-star"></i>
-            <i class="bx bxs-star"></i>
-            <i class="bx bx-star"></i>
-          </div>
-          <div class="img-cover">
-            <img src="./images/profile2.jpg" alt="" />
-          </div>
-          <h4>Will Smith</h4>
-        </div>
-        <div class="testimonial">
-          <span>&ldquo;</span>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Debitis,
-            fugiat labore. Veritatis et omnis consequatur.
-          </p>
-          <div class="rating">
-            <i class="bx bxs-star"></i>
-            <i class="bx bxs-star"></i>
-            <i class="bx bxs-star"></i>
-            <i class="bx bxs-star"></i>
-            <i class="bx bx-star"></i>
-          </div>
-          <div class="img-cover">
-            <img src="./images/profile3.jpg" alt="" />
-          </div>
-          <h4>Will Smith</h4>
-        </div>
+        @endforeach
       </div>
     </section>
     <!-- Product Banner -->

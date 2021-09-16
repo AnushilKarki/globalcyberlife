@@ -37,4 +37,5 @@ class Customer_payment extends Model
         return $this->belongsTo('App\Models\Delivery_parcel','parcel_id');
     }
     protected $table='customer_payments';
+    protected $fillable = ['order_id','user_id','status','particular','remaining','payment_type','total'];
 }

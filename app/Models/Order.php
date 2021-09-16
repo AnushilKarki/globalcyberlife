@@ -22,7 +22,9 @@ class Order extends Model
     {
         return $this->hasOne('App\Models\Order_attribute','order_id');
     }
-    
+    public function payment(){
+        return $this->hasOne('App\Models\Customer_payment','order_id');
+    }
     public function gift()
     {
         return $this->belongsTo('App\Models\Gift');
@@ -68,6 +70,15 @@ class Order extends Model
     'track'=> uniqid('no-'),
     'available_time'=>$this->delivery_time,
     
+]);
+$payment = $this->payment()->create([
+    'order_id'=>$this->id,
+    'particular'=>'order',
+    'remaining'=>$this->grand_total,
+    'payment_type'=>'to_pay',
+    'user_id'=>$userid,
+    'total'=>$this->grand_total,
+    'status'=>'pending',  
 ]);
  foreach($orderItems->groupBy('shop_id') as $shopId => $products) {
 
