@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Product_review;
 class ProductReviewController extends Controller
 {
     /**
@@ -34,7 +34,14 @@ class ProductReviewController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $review = new Product_review();
+        $review->user_id=auth()->user()->shop->id;
+     
+        $review->product_id=$request->input('product_id');
+        $review->review=$request->input('review');
+        $review->rating=$request->input('rating');
+     
+$review->save();
     }
 
     /**

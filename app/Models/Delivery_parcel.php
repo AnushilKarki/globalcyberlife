@@ -46,6 +46,6 @@ class Delivery_parcel extends Model
         return $this->hasMany('App\Models\Shop_payment','parcel_id');
     }
     protected $table='delivery_parcels';
-    protected $fillable = ['order_id','user_id','status','total_amount_collection','delivery_type','delivery_contact_no','delivery_address','particular','track','delivery_charge'];
+    protected $fillable = ['order_id','user_id','status','total_amount_collection','delivery_type','delivery_contact_no','delivery_address','particular','track','delivery_charge','pickup_address','pickup_contact_no','weight','km','item_count','sender','receiver'];
   
 }

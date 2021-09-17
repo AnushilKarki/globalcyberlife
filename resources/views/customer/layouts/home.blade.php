@@ -21,6 +21,60 @@
     <link rel="stylesheet" href="/assets/css/styles.css">
     <link rel="stylesheet" href="/assets/css/responsive.css">
     <!-- modernizr css -->
+   <style>
+   
+/* use reverse flexbox to take advantage of flex-direction: reverse */
+.star-rating {
+  display: flex;
+  align-items: center;
+  width: 160px;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  margin: 40px auto;
+  position: relative;
+}
+/* hide the inputs */
+.star-rating input {
+  display: none;
+}
+/* set properties of all labels */
+.star-rating > label {
+  width: 30px;
+  height: 30px;
+  font-family: Arial;
+  font-size: 30px;
+  transition: 0.2s ease;
+  color: orange;
+}
+/* give label a hover state */
+.star-rating label:hover {
+  color: #ff69b4;
+  transition: 0.2s ease;
+}
+.star-rating label:active::before {
+  transform:scale(1.1);
+}
+
+/* set shape of unselected label */
+.star-rating label::before {
+  content: '\2606';
+  position: absolute;
+  top: 0px;
+  line-height: 26px;
+}
+/* set full star shape for checked label and those that come after it */
+.star-rating input:checked ~ label:before {
+  content:'\2605';
+}
+
+@-moz-document url-prefix() {
+  .star-rating input:checked ~ label:before {
+  font-size: 36px;
+  line-height: 21px;
+  }
+}  
+   </style>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="/assets/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 
@@ -73,7 +127,7 @@
 
                             <li><a href="#"><i class="ti-receipt"></i> <span>Payment</span></a></li>
                             <li><a href="#"><i class="ti-receipt"></i> <span>Parcel</span></a></li>
-                            <li><a href="#"><i class="ti-envelope"></i> <span>Review</span></a></li>
+                            <li><a href="{{ route('shopratings.index') }}"><i class="ti-envelope"></i> <span>Review</span></a></li>
                          
 
 
@@ -158,9 +212,14 @@
                             </ul>
                         </div>
                     </div>
+                    <?php
+ $userid= auth()->id();
+ $photo = App\Models\User::where('id', $userid)->value('avatar');
+?>
+
                     <div class="col-sm-6 clearfix">
                         <div class="user-profile pull-right">
-                            <img class="avatar user-thumb" src="/assets/images/author/avatar.png" alt="avatar">
+                            <img class="avatar user-thumb" src="{{'storage/avatars/'.$photo}}" alt="avatar">
                             <h4 class="user-name dropdown-toggle" data-toggle="dropdown">                                    {{ Auth::user()->name }} <i class="fa fa-angle-down"></i></h4>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#">Message</a>
@@ -283,6 +342,7 @@
             </div>
         </div>
     </div>
+  
     <!-- offset area end -->
     <!-- jquery latest version -->
     <script src="/assets/js/vendor/jquery-2.2.4.min.js"></script>

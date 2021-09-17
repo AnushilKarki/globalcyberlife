@@ -3,10 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\GiftController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductReviewController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\ShopRatingController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\SubOrderController;
@@ -43,7 +46,7 @@ use App\Http\Controllers\Shopadmin\ShopOrderReturnController;
 |
 */
 use App\Models\Shop;
-
+use App\Models\Shop_rating;;
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
@@ -51,7 +54,6 @@ Route::group(['prefix' => 'admin'], function () {
 
 
 Route::get('/', [HomeController::class,'index'])->name('home');
-
 
 Route::middleware(['auth'])->get('/home',function(){
     return view('customer.home');
@@ -64,7 +66,8 @@ Route::middleware(['auth','role:shopadmin'])->get('/shopadmin',function(){
 Route::resource('blogs', BlogController::class)->middleware(['auth']);
 
 Route::resource('customerorders', CustomerOrderController::class)->middleware(['auth']);
-
+Route::resource('shopratings', ShopRatingController::class)->middleware(['auth']);
+Route::resource('productreviews', ProductReviewController::class)->middleware(['auth']);
 
 Route::resource('customerpurchasereturns', CustomerPurchaseReturnController::class)->middleware(['auth']);
 
@@ -180,7 +183,7 @@ Route::middleware(['auth'])->post('/cart/apply-shipping',[CartController::class,
 
 Route::resource('orders', OrderController::class)->middleware(['auth']);
 
-Route::resource('shops', ShopController::class)->middleware(['auth']);
+Route::resource('shops', ShopController::class);
 
 Route::middleware(['auth'])->get('/paypal/checkout/{order}',[PayPalController::class,'getExpressCheckout'])->name('paypal.checkout');
 
@@ -196,8 +199,12 @@ Route::get('/products/searchbyprice', [ProductController::class,'searchbyprice']
 
 Route::resource('products', ProductController::class);
 
+Route::resource('gifts', GiftController::class);
+
 Route::get('/delivery',function(){
-return view('delivery.index');
+    $status=NULL;
+    $reviews = Shop_rating::where('type','delivery')->take(3)->get();
+return view('delivery.index',compact('status','reviews'));
 }
 );
 
@@ -223,3 +230,15 @@ Route::get('/pdf',function(){
     $pdf->loadHTML('<h1>Test</h1>');
     return $pdf->stream();
 });
+
+//delivery company 
+Route::post('/franchise',[HomeController::class,'franchise'])->name('franchise.store');
+
+Route::post('/rider',[HomeController::class,'riderregister'])->name('rider.store');
+
+Route::post('/storeparcel',[HomeController::class,'storeparcel'])->name('package.store');
+
+Route::post('/trackparcel',[HomeController::class,'trackparcel'])->name('parcel.track');
+
+
+Route::resource('profiles',ProfileController::class)->middleware(['auth']);

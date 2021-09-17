@@ -59,10 +59,12 @@ class OrderController extends Controller
                 $order->shipping_fullname = $request->input('shipping_fullname');
                 $order->shipping_state = $request->input('shipping_state');
                 $order->shipping_city = $request->input('shipping_city');
+                $order->shipping_district = $request->input('shipping_district');
                 $order->shipping_address = $request->input('shipping_address');
                 $order->shipping_phone = $request->input('shipping_phone');
-                $order->shipping_zipcode = $request->input('shipping_zipcode');
-        
+  
+                $order->pickup_address = $request->input('pickup_address');
+                $order->pickup_contact = $request->input('pickup_contact');
                 if(!$request->has('billing_fullname'))
                 {
                     $order->billing_fullname = $request->input('shipping_fullname');
@@ -70,7 +72,7 @@ class OrderController extends Controller
                     $order->billing_city = $request->input('shipping_city');
                     $order->billing_address = $request->input('shipping_address');
                     $order->billing_phone = $request->input('shipping_phone');
-                    $order->billing_zipcode = $request->input('shipping_zipcode');
+
                 }
                 else{
                     $order->billing_fullname = $request->input('billing_fullname');
@@ -78,13 +80,14 @@ class OrderController extends Controller
                     $order->billing_city = $request->input('billing_city');
                     $order->billing_address = $request->input('billing_address');
                     $order->billing_phone = $request->input('billing_phone');
-                    $order->billing_zipcode = $request->input('billing_zipcode');
+                   
                 }
                
             $order->order_type=$request->input('ordertype');
                 $order->grand_total=\Cart::session(auth()->id())->getTotal();
                 $order->item_count=\Cart::session(auth()->id())->getContent()->count();
-        
+                $order->delivery_charge=$request->input('delivery_charge');
+                $order->delivery_time=$request->input('time');
                 $order->user_id = auth()->id();
                 $order->status='processing';
               
@@ -97,7 +100,7 @@ class OrderController extends Controller
         }
         else
         {
-            $order->payment_method='mobile_wallet';
+            $order->payment_method='pre_payment';
         }
                 $order->save();
             

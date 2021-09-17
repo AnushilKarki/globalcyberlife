@@ -94,14 +94,15 @@
          <input type="checkbox" id="show-features">
          <label for="show-features">Gift</label>
          <ul>                    @foreach($gifts as $gift)
-             <li>  <a href="{{ route('products.index',$gift->id) }}">{{ $gift->particular }}</a></li>
+             <li>  <a href="{{ route('gifts.index',$gift->id) }}">{{ $gift->particular }}</a></li>
 @endforeach
 
             
          </ul>
      </li>
         <li><a href="#">About US</a></li>
-        <li><a href="#">Feedback</a></li>
+        <li><a href="/delivery">Delivery office</a></li>
+           <li><a href="#">Help & Feedback</a></li>
     </ul>
  </div>
  <a href="{{ route('cart.index') }}" class="menu-search"><i class="fas fa-shopping-cart"></i></a>

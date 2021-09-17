@@ -13,11 +13,14 @@
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-    <link rel="stylesheet" href="css/navbar.css">
-    <link rel="stylesheet" href="css/home.css">
-    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/footer.css">
     <!-- custom css file link  -->
     <link rel="stylesheet" href="/css/styleHome.css">
+
+
+    
 <style>
 	
 h2{
@@ -203,7 +206,8 @@ span.price {
 		 </ul>
 	 </li>
 		<li><a href="#">About US</a></li>
-		<li><a href="#">Feedback</a></li>
+        <li><a href="/delivery">Delivery office</a></li>
+           <li><a href="#">Help & Feedback</a></li>
 	</ul>
  </div>
  <a href="{{ route('cart.index') }}" class="menu-search"><i class="fas fa-shopping-cart"></i></a>
@@ -233,23 +237,33 @@ span.price {
                         <h3>Billing Address</h3>
                         <label for="fname"><i class="fa fa-user"></i> Full Name</label>
                         <input type="text" id="fname" name="shipping_fullname" placeholder="Anushil Karki" required>
-                        <label for="email"><i class="fa fa-envelope"></i> Email</label>
-                        <input type="text" id="email" name="email" placeholder="karki420@gmail.com" required>
+                       
 						<label for="city"><i class="fa fa-institution"></i> Phone no </label>
                         <input type="text" id="city" name="shipping_phone" placeholder="9849594857" required>
-
-						
-
-                      
+                        <label for="city"><i class="fa fa-institution"></i> Detailed address </label>
+                        <input type="text" id="city" name="shipping_address" placeholder="ome shanti tole , sasarswoti school pachadi" required>
+                        <input type="hidden" value="{{ $district }}" id="city" name="shipping_district"  required>
+                        <input type="hidden" value="{{ $state }}"id="city" name="shipping_state"  required>
+                        <input type="hidden" value="{{ $address }}" id="city" name="shipping_city"  required>
+						@foreach($distribution as $p)
+                        <input type="hidden" value="{{ $p->particular }}"id="city" name="pickup_address"  required>
+                        <input type="hidden" value="{{ $p->contact }}" id="city" name="pickup_contact"  required>
+                      @endforeach
+                      <input type="hidden" value="{{ $charge }}" id="city" name="delivery_charge"  required>
+                      <input type="hidden" value="{{ $time }}" id="city" name="time"  required>
                     </div>
 
                     <div class="col-50">
                         <h3>Payment :</h3>
-                        <br>
-                        <br>
-                        
-                        <input name="payment_method" type="checkbox" value="cash_on_delivery"> Cash On Delivery</label></h3>
-                        
+                       
+                        @if($type=='standard')
+                       
+                        <input name="payment_method" type="hidden" value="cash_on_delivery"> Cash On Delivery</label></h3>
+                        @elseif($type=='courier')
+                   
+                        <input name="payment_method" type="hidden" value="pre_payment"> pre payment</label></h3>
+                        @endif
+                        <br><br>
                       <label>select order type</label>
 <select name="ordertype" id="sizes">
 
@@ -262,7 +276,7 @@ span.price {
                     </div>
                     <div class="col-50">
                         <h3>Delivery Charge : </h3>
-                        <h3>Rs : </h3>
+                        <h3>Rs :{{ $charge }} </h3>
                         <br>
                         <br>
 

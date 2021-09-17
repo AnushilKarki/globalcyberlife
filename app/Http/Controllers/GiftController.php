@@ -1,10 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Shop_rating;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-class ShopRatingController extends Controller
+use App\Models\Product;
+use App\Models\Category;
+use App\Models\Stock;
+use App\Models\Shop;
+use App\Models\Gift;
+class GiftController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,9 +18,22 @@ class ShopRatingController extends Controller
      */
     public function index()
     {
-        $userid= auth()->id();
-        $rating = DB::table('shop_ratings')->where('user_id',$userid)->get();
-        return view('customer.review.index',['reviews'=>$rating]);
+        $gifts = Gift::take(5)->get();
+        $shops = Shop::take(3)->get();
+        $categoryId = request('category_id');
+        $categoryName = null;
+
+        if($categoryId) {
+            $category = Category::find($categoryId);
+            $categoryName = ucfirst($category->name);
+
+            $products = $category->allProducts();
+        }else{
+            $products = Product::take(30)->get();
+        }
+        $categories = Category::whereNull('parent_id')->get();
+        
+        return view('gift.index', compact('products','shops', 'categoryName','categories','gifts'));
     }
 
     /**
@@ -36,15 +54,7 @@ class ShopRatingController extends Controller
      */
     public function store(Request $request)
     {
-        $review = new Shop_rating();
-        $review->user_id=auth()->user()->id;
-     
-        $review->type=$request->input('type');
-        $review->review=$request->input('review');
-        $review->rating=$request->input('rating');
-     
-$review->save();
-return redirect('/shopratings');
+        //
     }
 
     /**
@@ -66,8 +76,7 @@ return redirect('/shopratings');
      */
     public function edit($id)
     {
-        $edit = DB::table('shop_ratings')->where('id',$id)->get();
-        return view('customer.review.edit',['review'=>$edit,'id'=>$id]); 
+        //
     }
 
     /**
@@ -79,12 +88,7 @@ return redirect('/shopratings');
      */
     public function update(Request $request, $id)
     {
-        $review = Shop_rating::find($id);
-        $review->type=$request->input('type');
-        $review->review=$request->input('review');
-        $review->rating=$request->input('rating');
-        $review->save();
-return redirect()->back();
+        //
     }
 
     /**
@@ -95,8 +99,6 @@ return redirect()->back();
      */
     public function destroy($id)
     {
-        $review=Shop_rating::findOrFail($id);
-        $review->delete();
-        return redirect()->back();
+        //
     }
 }

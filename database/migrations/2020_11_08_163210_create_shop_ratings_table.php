@@ -19,6 +19,7 @@ class CreateShopRatingsTable extends Migration
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade')->nullable();
             $table->float('rating')->nullable();
             $table->text('review')->nullable();
+            $table->enum('type',['delivery','shopping'])->default('shopping');
             $table->timestamps();
         });
     }

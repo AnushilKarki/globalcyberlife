@@ -1,5 +1,21 @@
 @extends('customer.layouts.home')
 @section('content')
+<h2>upload your profile picture</h2>
+<?php
+ $userid= auth()->id();
+ 
+?>
+ 
+<form method="POST" enctype="multipart/form-data" action="{{ route('profiles.update',$userid) }}">
+@csrf
+@method('PUT')
+<div class="form-group">
+<input type="file" name="image">
+</div>
+
+<button class="form-control">submit</button>
+</form>
+<h2>change your password</h2>
 <form action="{{ route('user-password.update') }}" method="POST">
        @csrf 
     @method('PUT')

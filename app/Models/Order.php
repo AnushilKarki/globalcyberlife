@@ -2,6 +2,7 @@
 
 namespace App\Models;
 use App\Models\Shop;
+use App\Models\Order;
 use App\Models\SubOrderItems;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -21,7 +22,9 @@ class Order extends Model
     {
         return $this->hasOne('App\Models\Order_attribute','order_id');
     }
-    
+    public function payment(){
+        return $this->hasOne('App\Models\Customer_payment','order_id');
+    }
     public function gift()
     {
         return $this->belongsTo('App\Models\Gift');
@@ -43,11 +46,17 @@ class Order extends Model
       
 
  $orderItems = $this->item;
-       
+   
+
  $orders= \Cart::session(auth()->id())->getContent();
  $userid= auth()->id();
  $parcel = $this->delivery()->create([
     'order_id'=>$this->id,
+    'sender'=>'cyberlife marketplace',
+    'receiver'=>$this->shipping_fullname,
+    'item_count'=>$this->item_count,
+    'pickup_address'=>$this->pickup_address,
+    'pickup_contact_no'=>$this->pickup_contact,
     'delivery_type'=>'customer',
     'delivery_contact_no'=>$this->shipping_phone,
     'delivery_address'=>$this->shipping_address,
@@ -55,10 +64,21 @@ class Order extends Model
     'total_amount_collection'=>$this->grand_total,
     'status'=>'pending',
     'particular'=>'online shopping',
-    'item_count'=>$this->item_count,
+
+
     'delivery_charge'=>$this->delivery_charge,
-    'track'=> uniqid('no-')
+    'track'=> uniqid('no-'),
+    'available_time'=>$this->delivery_time,
     
+]);
+$payment = $this->payment()->create([
+    'order_id'=>$this->id,
+    'particular'=>'order',
+    'remaining'=>$this->grand_total,
+    'payment_type'=>'to_pay',
+    'user_id'=>$userid,
+    'total'=>$this->grand_total,
+    'status'=>'pending',  
 ]);
  foreach($orderItems->groupBy('shop_id') as $shopId => $products) {
 

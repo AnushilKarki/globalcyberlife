@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,16 +26,10 @@
 
 <!-- Custom StyleSheet -->
 <link rel="stylesheet" href="/css/styles.css" />
-<link rel="stylesheet" type="text/css" href="/css/styled.css">
-
-</head>
-<body>
-
-<!-- header section starts  -->
-
-
-
-
+<style>
+	
+</style>
+<header>
 
 <div class="nav-container">
 
@@ -92,14 +89,14 @@
          <input type="checkbox" id="show-features">
          <label for="show-features">Gift</label>
          <ul>                    @foreach($gifts as $gift)
-             <li>  <a href="{{ route('gifts.index',$gift->id) }}">{{ $gift->particular }}</a></li>
+             <li>  <a href="{{ route('products.index',$gift->id) }}">{{ $gift->particular }}</a></li>
 @endforeach
 
             
          </ul>
      </li>
         <li><a href="#">About US</a></li>
-		<li><a href="/delivery">Delivery office</a></li>
+        <li><a href="/delivery">Delivery office</a></li>
            <li><a href="#">Help & Feedback</a></li>
     </ul>
  </div>
@@ -115,14 +112,21 @@
  
 </div>
 
-<section class="featured" >
+</header>
+</head>
+<body>
+
+<!-- header section starts  -->
+
+
+
+
 <div class="top container">
 
 
-   <img src="/images/frontb.jpg" class="hero-img"alt="" />
+   <img src="/images/frontb.jpg" alt="" />
 
 </div>
-</section>
 <!-- header section ends -->
 
 <!-- home section starts  -->
@@ -143,13 +147,13 @@
         </div>
      
         <div class="product-center container">
-            @foreach($arrivals as $arrival)
+            @foreach($products as $arrival)
             <div class="product">
                 <div class="product-header">
                     <img src="{{asset('storage/'.$arrival->image)}}" alt="">
                     <ul class="icons">
                         <span><i class="bx bx-heart"></i></span>
-                        <a href="{{route('cart.add', $arrival->id)}}"> <span><i class="bx bx-shopping-bag"></i></span>
+                        <a href=""> <span><i class="bx bx-shopping-bag"></i></span>
                         </a>
                         <a href="{{route('products.show', $arrival)}}" style="--i:3;">   <span><i class="bx bx-search"></i></span></a>
                     </ul>
@@ -169,7 +173,7 @@
                 </div>
             </div>
             @endforeach
-          
+         
         </div>
     </section>
 
@@ -185,244 +189,119 @@
 
 <!-- home section ends -->
 
+<section class="section featured">
+    <div class="top container">
+      <h1>Related Products</h1>
+      <a href="#" class="view-more">View more</a>
+    </div>
+
+    <div class="product-center container">
+      <div class="product">
+        <div class="product-header">
+          <img src="./images/pic1.jpg" alt="">
+          <ul class="icons">
+            <span><i class="bx bx-heart"></i></span>
+            <span><i class="bx bx-shopping-bag"></i></span>
+            <span><i class="bx bx-search"></i></span>
+          </ul>
+        </div>
+        <div class="product-footer">
+          <a href="#"><h3>Boy’s T-Shirt</h3></a>
+          <div class="rating">
+            <i class="bx bxs-star"></i>
+            <i class="bx bxs-star"></i>
+            <i class="bx bxs-star"></i>
+            <i class="bx bxs-star"></i>
+            <i class="bx bx-star"></i>
+          </div>
+          <h4 class="price">$50</h4>
+        </div>
+      </div>
+      <div class="product">
+        <div class="product-header">
+          <img src="./images/pic2.jpg" alt="">
+
+          <ul class="icons">
+            <span><i class="bx bx-heart"></i></span>
+            <span><i class="bx bx-shopping-bag"></i></span>
+            <span><i class="bx bx-search"></i></span>
+          </ul>
+        </div>
+        <div class="product-footer">
+          <a href="#"><h3>Boy’s T-Shirt</h3></a>
+          <div class="rating">
+            <i class="bx bxs-star"></i>
+            <i class="bx bxs-star"></i>
+            <i class="bx bxs-star"></i>
+            <i class="bx bxs-star"></i>
+            <i class="bx bx-star"></i>
+          </div>
+          <h4 class="price">$50</h4>
+        </div>
+      </div>
+      <div class="product">
+        <div class="product-header">
+          <img src="./images/pic3.jpg" alt="">
+
+          <ul class="icons">
+            <span><i class="bx bx-heart"></i></span>
+            <span><i class="bx bx-shopping-bag"></i></span>
+            <span><i class="bx bx-search"></i></span>
+          </ul>
+        </div>
+        <div class="product-footer">
+          <a href="#"><h3>Boy’s T-Shirt</h3></a>
+          <div class="rating">
+            <i class="bx bxs-star"></i>
+            <i class="bx bxs-star"></i>
+            <i class="bx bxs-star"></i>
+            <i class="bx bxs-star"></i>
+            <i class="bx bx-star"></i>
+          </div>
+          <h4 class="price">$50</h4>
+        </div>
+      </div>
+      <div class="product">
+        <div class="product-header">
+          <img src="./images/pic4.jpg" alt="">
+
+          <ul class="icons">
+            <span><i class="bx bx-heart"></i></span>
+            <span><i class="bx bx-shopping-bag"></i></span>
+            <span><i class="bx bx-search"></i></span>
+          </ul>
+        </div>
+        <div class="product-footer">
+          <a href="#"><h3>Boy’s T-Shirt</h3></a>
+          <div class="rating">
+            <i class="bx bxs-star"></i>
+            <i class="bx bxs-star"></i>
+            <i class="bx bxs-star"></i>
+            <i class="bx bxs-star"></i>
+            <i class="bx bx-star"></i>
+          </div>
+          <h4 class="price">$50</h4>
+        </div>
+      </div>
+    </div>
+  </section>
 <!-- arrival section starts  -->
 
 
-
-<!-- header section ends -->
-<main>
-		<header>
-			<ul class="indicator">
-				<li data-filter="all" class="active">All</li>
-				<li data-filter="Blazer">Blazzer</li>
-				<li data-filter="Watch">Watch</li>
-				<li data-filter="Shoes">Shoes</li>
-				<li data-filter="Mobile">Mobiles</li>
-				<li data-filter="Accessories">Accessories</li>
-			</ul>
-			<div class="filter-condition">
-				<span>View As a</span>
-				<select name="" id="select">
-					<option value="Default">Default</option>
-					<option value="LowToHigh">Low to high</option>
-					<option value="HighToLow">High to low</option>
-				</select>
-			</div>
-		</header>
-		<div class="product-field">
-			<ul class="items">
-				<li data-category="" data-price="">
-					<picture>
-						<img src="image/wa1.png" alt="">
-					</picture>
-					<div class="detail">
-						<p class="icon">
-						   <span><i class="far fa-heart"></i></span>
-						   <span><i class="far fa-share-square"></i></span>
-						   <span><i class="fas fa-shopping-basket"></i></span>
-						</p>
-						<strong>Watch</strong>
-						<span>Lorem, ipsum dolor sit amet consectetur.</span>
-						<small>Buy now</small>
-					</div>
-					<h4>$45.78</h4>
-				</li>
-				<li data-category="" data-price="">
-					<picture>
-						<img src="image/bz1.png" alt="">
-					</picture>
-					<div class="detail">
-						<p class="icon">
-						   <span><i class="far fa-heart"></i></span>
-						   <span><i class="far fa-share-square"></i></span>
-						   <span><i class="fas fa-shopping-basket"></i></span>
-						</p>
-						<strong>Blazer</strong>
-						<span>Lorem, ipsum dolor sit amet consectetur.</span>
-						<small>Buy now</small>
-					</div>
-					<h4>$35.78</h4>
-				</li>
-				<li data-category="" data-price="">
-					<picture>
-						<img src="image/wa2.png" alt="">
-					</picture>
-					<div class="detail">
-						<p class="icon">
-						   <span><i class="far fa-heart"></i></span>
-						   <span><i class="far fa-share-square"></i></span>
-						   <span><i class="fas fa-shopping-basket"></i></span>
-						</p>
-						<strong>Watch</strong>
-						<span>Lorem, ipsum dolor sit amet consectetur.</span>
-						<small>Buy now</small>
-					</div>
-					<h4>$40.78</h4>
-				</li>
-				<li data-category="" data-price="">
-					<picture>
-						<img src="image/bz2.png" alt="">
-					</picture>
-					<div class="detail">
-						<p class="icon">
-						   <span><i class="far fa-heart"></i></span>
-						   <span><i class="far fa-share-square"></i></span>
-						   <span><i class="fas fa-shopping-basket"></i></span>
-						</p>
-						<strong>Blazer</strong>
-						<span>Lorem, ipsum dolor sit amet consectetur.</span>
-						<small>Buy now</small>
-					</div>
-					<h4>$42.78</h4>
-				</li>
-				<li data-category="" data-price="">
-					<picture>
-						<img src="image/wa3.png" alt="">
-					</picture>
-					<div class="detail">
-						<p class="icon">
-						   <span><i class="far fa-heart"></i></span>
-						   <span><i class="far fa-share-square"></i></span>
-						   <span><i class="fas fa-shopping-basket"></i></span>
-						</p>
-						<strong>Watch</strong>
-						<span>Lorem, ipsum dolor sit amet consectetur.</span>
-						<small>Buy now</small>
-					</div>
-					<h4>$46.78</h4>
-				</li>
-				<li data-category="" data-price="">
-					<picture>
-						<img src="image/bz4.png" alt="">
-					</picture>
-					<div class="detail">
-						<p class="icon">
-						   <span><i class="far fa-heart"></i></span>
-						   <span><i class="far fa-share-square"></i></span>
-						   <span><i class="fas fa-shopping-basket"></i></span>
-						</p>
-						<strong>Blazer</strong>
-						<span>Lorem, ipsum dolor sit amet consectetur.</span>
-						<small>Buy now</small>
-					</div>
-					<h4>$55.78</h4>
-				</li>
-				<li data-category="" data-price="">
-					<picture>
-						<img src="image/so.png" alt="">
-					</picture>
-					<div class="detail">
-						<p class="icon">
-						   <span><i class="far fa-heart"></i></span>
-						   <span><i class="far fa-share-square"></i></span>
-						   <span><i class="fas fa-shopping-basket"></i></span>
-						</p>
-						<strong>Shoes</strong>
-						<span>Lorem, ipsum dolor sit amet consectetur.</span>
-						<small>Buy now</small>
-					</div>
-					<h4>$25.78</h4>
-				</li>
-				<li data-category="" data-price="">
-					<picture>
-						<img src="image/samsung.png" alt="">
-					</picture>
-					<div class="detail">
-						<p class="icon">
-						   <span><i class="far fa-heart"></i></span>
-						   <span><i class="far fa-share-square"></i></span>
-						   <span><i class="fas fa-shopping-basket"></i></span>
-						</p>
-						<strong>Mobile</strong>
-						<span>Lorem, ipsum dolor sit amet consectetur.</span>
-						<small>Buy now</small>
-					</div>
-					<h4>$20.78</h4>
-				</li>
-				<li data-category="" data-price="">
-					<picture>
-						<img src="image/so1.png" alt="">
-					</picture>
-					<div class="detail">
-						<p class="icon">
-						   <span><i class="far fa-heart"></i></span>
-						   <span><i class="far fa-share-square"></i></span>
-						   <span><i class="fas fa-shopping-basket"></i></span>
-						</p>
-						<strong>Shoes</strong>
-						<span>Lorem, ipsum dolor sit amet consectetur.</span>
-						<small>Buy now</small>
-					</div>
-					<h4>$15.78</h4>
-				</li>
-				<li data-category="" data-price="">
-					<picture>
-						<img src="image/so2.png" alt="">
-					</picture>
-					<div class="detail">
-						<p class="icon">
-						   <span><i class="far fa-heart"></i></span>
-						   <span><i class="far fa-share-square"></i></span>
-						   <span><i class="fas fa-shopping-basket"></i></span>
-						</p>
-						<strong>Shoes</strong>
-						<span>Lorem, ipsum dolor sit amet consectetur.</span>
-						<small>Buy now</small>
-					</div>
-					<h4>$22.78</h4>
-				</li>
-				<li data-category="" data-price="">
-					<picture>
-						<img src="image/one.png" alt="">
-					</picture>
-					<div class="detail">
-						<p class="icon">
-						   <span><i class="far fa-heart"></i></span>
-						   <span><i class="far fa-share-square"></i></span>
-						   <span><i class="fas fa-shopping-basket"></i></span>
-						</p>
-						<strong>Mobile</strong>
-						<span>Lorem, ipsum dolor sit amet consectetur.</span>
-						<small>Buy now</small>
-					</div>
-					<h4>$33.78</h4>
-				</li>
-				<li data-category="" data-price="">
-					<picture>
-						<img src="image/so3.png" alt="">
-					</picture>
-					<div class="detail">
-						<p class="icon">
-						   <span><i class="far fa-heart"></i></span>
-						   <span><i class="far fa-share-square"></i></span>
-						   <span><i class="fas fa-shopping-basket"></i></span>
-						</p>
-						<strong>Shoes</strong>
-						<span>Lorem, ipsum dolor sit amet consectetur.</span>
-						<small>Buy now</small>
-					</div>
-					<h4>$44.78</h4>
-				</li>
-			</ul>
-		</div>
-	</main>
 <!-- arrival section ends -->
 
 
 
-<!-- featured section ends -->
 
 
-
+<!-- gallery section ends -->
 
 <!-- deal section starts  -->
-
 
 
 <!-- deal section ends -->
 
 <!-- newsletter section starts  -->
-
 
 
 <!-- newsletter section ends -->
@@ -482,10 +361,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
 <!-- custom js file link  -->
-<script src="/js/home.js"></script>
+<script src="js/home.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
   <!-- Custom Script -->
   <script src="/js/index.js"></script>
-  <script type="text/javascript" src="/js/main.js"></script>
+
+
+  
+
 </body>
 </html>
