@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Customer_payment;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class CustomerPaymentController extends Controller
 {
     /**
@@ -13,7 +13,10 @@ class CustomerPaymentController extends Controller
      */
     public function index()
     {
-        //
+        $userid= auth()->id();
+        $payment = DB::table('customer_payments')->where('user_id',$userid)->where('status','pending')->get();
+        $account = DB::table('bank_accounts')->get();
+        return view('customer.payment.index',['payments'=>$payment,'accounts'=>$account]);
     }
 
     /**
@@ -56,7 +59,8 @@ class CustomerPaymentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $edit = DB::table('customer_payments')->where('id',$id)->get();
+        return view('customer.payment.add',['payments'=>$edit,'id'=>$id]); 
     }
 
     /**
@@ -68,7 +72,23 @@ class CustomerPaymentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $edit = DB::table('customer_payments')->where('id',$id)->get();
+        foreach($edit as $e){
+            $paidbefore = $e->paid;
+            $remainingbefore = $e->remaining;
+        }
+        $payments = Customer_payment::find($id);
+       $paidafter=$request->input('paid');
+       $paid=$paidbefore+$paidafter;
+       $remainingafter = $remainingbefore-$paidafter;
+        $payments->paid=$paid;
+        $payments->remaining=$remainingafter;
+        if($remainingafter==0){
+$payment->status='completed';
+        }
+        $payments->payment_method=$request->input('type');
+$payments->save();
+return redirect()->back();
     }
 
     /**
@@ -79,6 +99,9 @@ class CustomerPaymentController extends Controller
      */
     public function destroy($id)
     {
+        //
+    }
+    public function pdf(){
         //
     }
 }

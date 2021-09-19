@@ -1,10 +1,11 @@
 
 @extends('customer.layouts.home')
 @section('content')
+@include('customer.payment.accountdetail')
 <div class="col-12 mt-5">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="header-title">Orders Table</h4>
+                                <h4 class="header-title">Payments Table</h4>
                                 <div class="single-table">
                                     <div class="table-responsive">
                                         <table class="table table-hover progress-table text-center">
@@ -12,31 +13,30 @@
                                                 <tr>
                                                     <th scope="col">ID</th>
                                                     <th scope="col">Order</th>
-                                                    <th scope="col">Deadline</th>
-                                                    <th scope="col">Progress</th>
+                                                    <th scope="col">Type</th>
+                                                    <th scope="col">particular</th>
+                                                    <th scope="col">Grand TOtal</th>
                                                     <th scope="col">status</th>
                                                     <th scope="col">action</th>
+                                                    <th scope="col">view pdf</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                            @foreach($payments as $payment)
                                                 <tr>
-                                                    <th scope="row">1</th>
-                                                    <td>Mark</td>
-                                                    <td>09 / 07 / 2018</td>
+                                                    <th scope="row">{{ $payment->id }}</th>
+                                                    <td>{{ $payment->order_id }}</td>
+                                                    <td>{{ $payment->payment_type }}</td>
+                                                    <td>{{ $payment->particular }}</td>
+                                                    <td>{{ $payment->total }}</td>
+                                                    <td>{{ $payment->status }}</td>
+                                                    <td>  <a href="{{ route('customerpayments.edit',$payment->id) }}">pay</a>  </td>
                                                     <td>
-                                                        <div class="progress" style="height: 8px;">
-                                                            <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td><span class="status-p bg-primary">pending</span></td>
-                                                    <td>
-                                                        <ul class="d-flex justify-content-center">
-                                                            <li class="mr-3"><a href="#" class="text-secondary"><i class="fa fa-edit"></i></a></li>
-                                                            <li><a href="#" class="text-danger"><i class="ti-trash"></i></a></li>
-                                                        </ul>
+                                                       <a href="{{ route('customerpayments.pdf') }}"></a>
+                  
                                                     </td>
                                                 </tr>
-                                              
+                                              @endforeach
                                              
                                             </tbody>
                                         </table>
