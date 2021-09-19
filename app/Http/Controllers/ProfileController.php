@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Http\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\User;
 class ProfileController extends Controller
@@ -74,10 +75,10 @@ $user = User::find($userid);
 $avatar = $request->file('image');
 
 $name = $request->file('image')->getClientOriginalName();
-
+$extension = $request->file('image')->extension();
 $user->avatar=$name;
-$path = $request->file('image')->store(
-    'avatars'.$name, 'public'
+$request->file('image')->storeAs(
+    'avatars', $name,'public'
 );
 
 

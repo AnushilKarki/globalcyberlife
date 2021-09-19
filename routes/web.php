@@ -71,6 +71,9 @@ Route::resource('productreviews', ProductReviewController::class)->middleware(['
 
 Route::resource('customerpurchasereturns', CustomerPurchaseReturnController::class)->middleware(['auth']);
 
+Route::resource('customerpayments', CustomerPaymentController::class)->middleware(['auth']);
+
+
 Route::resource('notes', NoteController::class)->middleware(['auth']);
 
 Route::middleware(['auth','role:shopadmin'])->get('/shopnote',[NoteController::class,'shopindex'])->name('notes.shop');
@@ -110,7 +113,7 @@ Route::middleware(['auth','role:shopadmin'])->put('/shopcustomerservice/{id}',[C
 
 Route::resource('notices', NoticeController::class)->middleware(['auth']);
 
-Route::resource('customerpayments',CustomerPaymentController::class)->middleware(['auth']);
+Route::get('customerpayments/pdf',[CustomerPaymentController::class,'pdf'])->middleware(['auth'])->name('customerpayments.pdf');
 
 
 Route::resource('shoporders', ShopOrderController::class)->middleware(['auth','role:shopadmin']);
